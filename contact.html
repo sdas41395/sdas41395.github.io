@@ -186,6 +186,26 @@
     .form-submit:hover { opacity: 0.88; transform: translateY(-1px); }
     .form-submit svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
     .form-note { font-size: 0.78rem; color: var(--muted); margin-top: 0.25rem; line-height: 1.5; }
+    .form-success {
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 2rem;
+      background: var(--surface2);
+      border: 1px solid rgba(13,155,150,0.25);
+      border-radius: 6px;
+    }
+    .form-success.visible { display: flex; }
+    .form-success-icon {
+      width: 40px; height: 40px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .form-success-icon svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .form-success-title { font-family: 'Lora', serif; font-size: 1.15rem; font-weight: 400; color: var(--text); letter-spacing: -0.01em; }
+    .form-success-sub { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
 
     /* FOOTER */
     footer {
@@ -281,7 +301,7 @@
   <!-- RIGHT: FORM -->
   <div class="contact-form-wrap">
     <p class="info-section-label" style="margin-bottom:1.5rem;">Send us a message</p>
-    <form class="contact-form" action="mailto:barbara@blackcatbio.ai" method="POST" enctype="text/plain">
+    <form class="contact-form" id="contact-form" action="https://formspree.io/f/mrejaaro" method="POST">
       <div class="form-row">
         <div class="field">
           <label class="field-label" for="fname">First name</label>
@@ -323,7 +343,16 @@
         </button>
         <p class="form-note">We typically respond within one business day.</p>
       </div>
+      <input type="hidden" name="_subject" value="New inquiry — BlackCat Bio" />
+      <input type="hidden" name="_replyto" value="" id="reply-to-field" />
     </form>
+    <div class="form-success" id="form-success">
+      <div class="form-success-icon">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <p class="form-success-title">Message sent — we'll be in touch.</p>
+      <p class="form-success-sub">Barbara typically responds within one business day. In the meantime, feel free to <a href="https://calendly.com/elashoffb/demo" style="color:var(--accent);text-decoration:none;">book a call directly</a>.</p>
+    </div>
   </div>
 
 </div>
@@ -353,5 +382,34 @@
   <div class="footer-copy">&copy; 2025 BlackCat Bio, Inc.</div>
 </footer>
 
+<script>
+  const form = document.getElementById('contact-form');
+  const success = document.getElementById('form-success');
+  const emailField = document.getElementById('email');
+  const replyTo = document.getElementById('reply-to-field');
+
+  emailField.addEventListener('input', () => { replyTo.value = emailField.value; });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    replyTo.value = emailField.value;
+    const data = new FormData(form);
+    try {
+      const res = await fetch('https://formspree.io/f/mrejaaro', {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        form.style.display = 'none';
+        success.classList.add('visible');
+      } else {
+        alert('Something went wrong — please email barbara@blackcatbio.ai directly.');
+      }
+    } catch {
+      alert('Something went wrong — please email barbara@blackcatbio.ai directly.');
+    }
+  });
+</script>
 </body>
 </html>
