@@ -22,7 +22,8 @@
       --muted: #6c6c6c;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    img { max-width: 100%; height: auto; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
     body {
       background: var(--bg);
       color: var(--text);
@@ -226,6 +227,46 @@
     .footer-contact-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
     .footer-divider-dot { color: var(--border); font-size: 1.2rem; line-height: 1; }
     .footer-copy { font-size: 0.75rem; color: var(--muted); }
+
+    /* ── MOBILE HAMBURGER ── */
+    .nav-toggle {
+      display: none;
+      background: none; border: none; cursor: pointer; padding: 0.5rem; z-index: 110;
+    }
+    .nav-toggle span {
+      display: block; width: 22px; height: 2px; background: var(--text); margin: 5px 0;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .nav-toggle.active span:nth-child(2) { opacity: 0; }
+    .nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    @media (max-width: 1024px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-toggle { display: block; }
+      .nav-links {
+        position: fixed; top: 0; right: 0; width: 75vw; max-width: 320px; height: 100vh;
+        background: var(--surface); flex-direction: column; padding: 5rem 2rem 2rem; gap: 1.5rem;
+        border-left: 1px solid var(--border); box-shadow: -4px 0 24px rgba(8,21,50,0.1);
+        transform: translateX(100%); transition: transform 0.3s ease; z-index: 105;
+      }
+      .nav-links.open { transform: translateX(0); }
+      .nav-links a { font-size: 0.9rem; }
+      .nav-cta { text-align: center; }
+      .contact-wrap { grid-template-columns: 1fr; gap: 2.5rem; padding: 3rem 1.5rem 4rem; }
+      .page-header { padding: 7rem 1.5rem 3rem; }
+      footer {
+        flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 1.5rem;
+      }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+      .footer-contact { flex-wrap: wrap; justify-content: center; }
+    }
+
+    @media (max-width: 768px) {
+      .form-row { grid-template-columns: 1fr; }
+      .calendly-btn { align-self: stretch; justify-content: center; }
+      .form-submit { width: 100%; justify-content: center; }
+    }
   </style>
 </head>
 <body>
@@ -235,6 +276,7 @@
     <img src="blackcatlogo_no_bg.png" alt="BlackCat Bio" style="height: 28px;">
     <span class="nav-logo-text">BlackCat Bio</span>
   </a>
+  <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
   <ul class="nav-links">
     <li><a href="index.html#how">Platform</a></li>
     <li><a href="index.html#features">Features</a></li>
@@ -374,6 +416,19 @@
 </footer>
 
 <script>
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('active');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navToggle.classList.remove('active');
+      navLinks.classList.remove('open');
+    });
+  });
+
   const form = document.getElementById('contact-form');
   const success = document.getElementById('form-success');
   const emailField = document.getElementById('email');
