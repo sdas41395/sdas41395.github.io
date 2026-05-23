@@ -484,6 +484,126 @@
       font-weight: 500;
     }
 
+    /* ── PLATFORM ARCHITECTURE ── */
+    .arch-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+      margin-bottom: 3.5rem;
+    }
+
+    .arch-desc {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      padding-bottom: 0.25rem;
+    }
+
+    .arch-stepper {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding: 0 4rem;
+    }
+
+    .arch-step-node { display: flex; justify-content: center; }
+
+    .arch-step-circle {
+      width: 42px;
+      height: 42px;
+      border-radius: 9px;
+      border: 1.5px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Lora', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--accent);
+      background: rgba(13,155,150,0.06);
+      position: relative;
+      z-index: 1;
+    }
+
+    .arch-step-circle.purple {
+      border-color: var(--purple);
+      color: var(--purple);
+      background: rgba(69,12,157,0.06);
+    }
+
+    .arch-step-line {
+      height: 1px;
+      background: linear-gradient(90deg, rgba(13,155,150,0.4), rgba(69,12,157,0.4));
+    }
+
+    .arch-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+      align-items: stretch;
+    }
+
+    .arch-col { display: flex; flex-direction: column; gap: 0.9rem; }
+
+    .arch-col-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: -0.01em;
+    }
+
+    .arch-col-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .arch-col-shot {
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background: var(--surface);
+      box-shadow: 0 6px 24px rgba(8,21,50,0.09), 0 1px 4px rgba(8,21,50,0.05);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .arch-col-shot:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(8,21,50,0.12), 0 2px 6px rgba(8,21,50,0.06);
+    }
+
+    .arch-col-shot img { width: 100%; display: block; }
+
+    .arch-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; justify-content: center; margin-top: auto; padding-top: 0.5rem; }
+
+    .arch-chip {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-dim);
+      padding: 0.18rem 0.55rem;
+      border-radius: 3px;
+    }
+
+    .arch-chip.purple {
+      color: var(--purple);
+      background: var(--purple-dim);
+    }
+
+    @media (max-width: 1024px) {
+      .arch-header { grid-template-columns: 1fr; gap: 1.5rem; }
+      .arch-cols { grid-template-columns: 1fr; }
+      .arch-stepper { padding: 0 1rem; }
+    }
+
+    @media (max-width: 768px) {
+      .arch-stepper { display: none; }
+    }
+
     /* ── FEATURES ── */
     .features {
       padding: 4rem 0 8rem;
@@ -1492,6 +1612,103 @@
         padding: 1.5rem 1rem;
       }
     }
+
+    /* ── STAT BANNER ── */
+    .stat-banner {
+      background: #5a1fb5;
+      padding: 3rem 4rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 35% 100% at 0% 50%, rgba(13,155,150,0.22) 0%, transparent 100%),
+        radial-gradient(ellipse 35% 100% at 100% 50%, rgba(13,155,150,0.12) 0%, transparent 100%);
+    }
+
+    .stat-banner::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(13,155,150,0.7), rgba(13,155,150,0.7), transparent);
+    }
+
+    .stat-banner-item {
+      position: relative;
+      z-index: 1;
+      padding: 0 2rem;
+      border-right: 1px solid rgba(255,255,255,0.12);
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .stat-banner-item:first-child { padding-left: 0; }
+    .stat-banner-item:last-child { border-right: none; }
+
+    .stat-banner-num {
+      font-family: 'Lora', serif;
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.2rem;
+    }
+
+    .stat-banner-num .accent { color: var(--accent); }
+    .stat-banner-num .sm { font-size: 1.4rem; }
+    .stat-banner-num .arrow { color: var(--light-blue); font-size: 1.6rem; margin: 0 0.1rem; }
+
+    .stat-banner-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.92);
+      line-height: 1.3;
+    }
+
+    .stat-banner-sub {
+      font-size: 0.69rem;
+      color: rgba(255,255,255,0.38);
+      line-height: 1.5;
+      margin-top: 0.1rem;
+    }
+
+    @media (max-width: 1024px) {
+      .stat-banner {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5px;
+        padding: 2.5rem 3rem;
+        background-color: var(--purple);
+      }
+      .stat-banner-item {
+        padding: 1.5rem;
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        background: transparent;
+      }
+      .stat-banner-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.1); }
+      .stat-banner-item:nth-last-child(-n+2) { border-bottom: none; }
+    }
+
+    @media (max-width: 768px) {
+      .stat-banner {
+        grid-template-columns: 1fr;
+        padding: 2rem 1.5rem;
+      }
+      .stat-banner-item { border-right: none !important; }
+      .stat-banner-item:nth-last-child(-n+2) { border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .stat-banner-item:last-child { border-bottom: none; }
+      .stat-banner-num { font-size: 2rem; }
+    }
   </style>
 </head>
 <body>
@@ -1519,7 +1736,7 @@
     <h1>Expert-quality SAPs at <em>AI speed</em></h1>
 
     <p class="hero-sub">
-      BlackCat Bio's therapeutic-area AI agents cut statistical analysis plan (SAP) drafting from <b>weeks</b> to <b>days</b>, catch indication-specific issues in protocols before they become amendments, and deliver fully sourced outputs grounded in FDA guidance for your exact study type.
+      Purpose-built regulatory intelligence for clinical-trial biostatistics, combining evidence-grounded AI systems with expert human review.
     </p>
 
     <div class="hero-actions">
@@ -1554,15 +1771,27 @@
   </div>
 </section>
 
-<!-- TRUST BAR -->
-<div class="trust-bar">
-  <span class="trust-label">Built for</span>
-  <div class="trust-items">
-    <span class="trust-item">CROs</span>
-    <span class="trust-item">Biotech Sponsors</span>
-    <span class="trust-item">Contract Statisticians</span>
-    <span class="trust-item">Regulatory Affairs Teams</span>
-    <span class="trust-item">Phase I–III Trials</span>
+<!-- STAT BANNER -->
+<div class="stat-banner">
+  <div class="stat-banner-item">
+    <div class="stat-banner-num">500,000<span class="accent">+</span></div>
+    <div class="stat-banner-label">Indexed Documents</div>
+    <div class="stat-banner-sub">FDA guidance · CRLs · Statistical reviews · Clinical trial protocols</div>
+  </div>
+  <div class="stat-banner-item">
+    <div class="stat-banner-num">7 <span class="accent sm">days</span></div>
+    <div class="stat-banner-label">Complete SAP Delivered to FDA</div>
+    <div class="stat-banner-sub">Delivered on a live Phase III program</div>
+  </div>
+  <div class="stat-banner-item">
+    <div class="stat-banner-num">80<span class="arrow">→</span><span class="accent">4</span><span class="accent sm"> hrs</span></div>
+    <div class="stat-banner-label">Phase III TFL Shell Production</div>
+    <div class="stat-banner-sub">Delivered to a client, end-to-end</div>
+  </div>
+  <div class="stat-banner-item">
+    <div class="stat-banner-num">100<span class="accent">%</span></div>
+    <div class="stat-banner-label">Credentialed Statistician Sign-Off</div>
+    <div class="stat-banner-sub">Before every client delivery, no exceptions</div>
   </div>
 </div>
 
@@ -1591,44 +1820,58 @@
 </section>
 
 
-<!-- HOW IT WORKS -->
+<!-- PLATFORM ARCHITECTURE -->
 <section class="how" id="how">
   <div class="section-inner">
-    <div class="how-header reveal">
+
+    <div class="arch-header reveal" style="grid-template-columns: 1fr; margin-bottom: 2.5rem;">
       <div>
-        <div class="section-tag">How it works</div>
-        <h2>From briefing to<br>submission-ready in days.</h2>
+        <div class="section-tag">Platform Architecture</div>
+        <h2>Purpose-built <em>AI</em> for regulated<br>statistical workflows.</h2>
       </div>
-      <p class="how-desc">
-        Unlike generic AI, BlackCat Bio deploys therapeutic-area agents trained on the specific statistical conventions, FDA precedent, and operational realities of your indication.
-      </p>
     </div>
 
-    <div class="steps reveal">
-      <div class="step">
-        <div class="step-num">01</div>
-        <div class="step-title">Ingest your context</div>
-        <div class="step-desc">Upload protocols, IND documents, FDA correspondence, slidedecks, and publications. We build a knowledge base scoped entirely to your program.</div>
-        <span class="step-tag">Secure document vault</span>
+    <div class="arch-cols reveal">
+
+      <div class="arch-col">
+        <div class="arch-col-title">Regulatory Knowledge Base</div>
+        <div class="arch-col-desc">500,000+ indexed documents. Every recommendation arrives with the exact FDA source — guidance, CRL, or SPA communication — it came from.</div>
+        <div class="arch-col-shot">
+          <img src="images/platform_source_citation.png" alt="Source citation from FDA document" />
+        </div>
+        <div class="arch-chips">
+          <span class="arch-chip">Vector Retrieval</span>
+          <span class="arch-chip">500K+ Docs</span>
+          <span class="arch-chip">Source-Locked</span>
+        </div>
       </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <div class="step-title">AI agents extract statistical decisions</div>
-        <div class="step-desc">Our AI agents surface every statistical decision your trial requires. Each recommendation is sourced, evidence-backed, and specific to your program.</div>
-        <span class="step-tag">Multi-agent evidence layer</span>
+
+      <div class="arch-col">
+        <div class="arch-col-title">Precedent-Aware Agents</div>
+        <div class="arch-col-desc">Indication-specific agents surface every statistical decision your trial requires — flagging issues, citing evidence, and routing to the right specialist by study type.</div>
+        <div class="arch-col-shot">
+          <img src="images/platform_agent_review.png" alt="Agent review panel showing issues and evidence" />
+        </div>
+        <div class="arch-chips">
+          <span class="arch-chip purple">Indication Routing</span>
+          <span class="arch-chip purple">Multi-Agent</span>
+          <span class="arch-chip purple">Audit Trail</span>
+        </div>
       </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <div class="step-title">Statistician reviews the evidence</div>
-        <div class="step-desc">Your statistician — or our ex-FDA statistician serving as your study statistician — reviews the underlying rationale behind every recommendation and provides expert sign-off. Nothing proceeds without human review.</div>
-        <span class="step-tag">Human-in-the-loop</span>
+
+      <div class="arch-col">
+        <div class="arch-col-title">Expert Review</div>
+        <div class="arch-col-desc">A credentialed statistician reviews every output before delivery. Nothing leaves the platform without human sign-off.</div>
+        <div class="arch-col-shot">
+          <img src="images/platform_sap_output.png" alt="Final submission-ready SAP document" />
+        </div>
+        <div class="arch-chips">
+          <span class="arch-chip">Human Sign-Off</span>
+          <span class="arch-chip">Ex-FDA</span>
+          <span class="arch-chip">Submission-Ready</span>
+        </div>
       </div>
-      <div class="step">
-        <div class="step-num">04</div>
-        <div class="step-title">Generate, Iterate, Refine</div>
-        <div class="step-desc">Generate a first draft using one of your prior SAPs as a template — or start from our template library. Every draft is fully editable and open to interrogation: change a decision, regenerate a section, or request fresh agent feedback at any point in the process. The loop stays open until it’s right.</div>
-        <span class="step-tag">Decision-level iteration</span>
-      </div>
+
     </div>
   </div>
 </section>
