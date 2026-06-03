@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SAPs for External & Augmented Control Arms | BlackCat Bio</title>
+  <link rel="icon" type="image/png" href="blackcatlogo_no_bg.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #f4f4f4;
+      --surface: #ffffff;
+      --surface2: #eaf2f1;
+      --border: rgba(8, 21, 50, 0.1);
+      --accent: #0d9b96;
+      --accent-dim: rgba(13, 155, 150, 0.1);
+      --accent-glow: rgba(13, 155, 150, 0.2);
+      --purple: #450c9d;
+      --purple-dim: rgba(69, 12, 157, 0.08);
+      --light-blue: #d1e1e0;
+      --text: #081532;
+      --muted: #6c6c6c;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    img { max-width: 100%; height: auto; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 4rem;
+      background: rgba(244, 244, 244, 0.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      text-decoration: none;
+    }
+    .nav-logo-text {
+      font-family: 'Lora', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #081532;
+      letter-spacing: -0.02em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--accent);
+      color: #ffffff !important;
+      padding: 0.5rem 1.25rem;
+      border-radius: 3px;
+      font-weight: 600 !important;
+      letter-spacing: 0.04em !important;
+      transition: opacity 0.2s !important;
+    }
+    .nav-cta:hover { opacity: 0.85; color: #ffffff !important; }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 110;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      transition: 0.3s;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      position: relative;
+      padding: 8rem 4rem 4rem;
+      background: linear-gradient(135deg, rgba(69,12,157,0.04) 0%, rgba(13,155,150,0.08) 100%);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .page-header-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.4;
+    }
+    .page-header-inner {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+      z-index: 2;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--accent);
+      font-size: 0.8rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+    .back-link svg {
+      width: 16px; height: 16px;
+      stroke: currentColor; fill: none; stroke-width: 2;
+    }
+    .back-link:hover { color: var(--purple); }
+    .page-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .page-header h1 {
+      font-family: 'Lora', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+    }
+    .page-header h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .page-header .lede {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 60ch;
+      line-height: 1.7;
+    }
+
+    /* ── TAGSTRIP ── */
+    .tagstrip {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 4rem;
+    }
+    .tagstrip-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 2rem;
+    }
+    .tagstrip span {
+      color: var(--muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .tagstrip span::before {
+      content: "";
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    .tagstrip span:nth-child(2)::before { background: var(--purple); }
+    .tagstrip span:nth-child(3)::before { background: var(--light-blue); }
+
+    /* ── CONTENT SECTIONS ── */
+    .content-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 4rem;
+    }
+
+    .article-section {
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .article-section:last-child { border-bottom: none; }
+
+    .section-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .article-section h2 {
+      font-family: 'Lora', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 1rem;
+      line-height: 1.25;
+    }
+
+    .article-section h3 {
+      font-family: 'Lora', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .article-section p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.75;
+      margin-bottom: 1rem;
+      max-width: 70ch;
+    }
+    .article-section p strong { color: var(--text); font-weight: 500; }
+
+    .section-alt {
+      background: var(--surface);
+      margin: 0 -4rem;
+      padding: 4rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    /* ── STEPS ── */
+    .steps {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .step::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: var(--accent);
+    }
+    .step:nth-child(2)::before { background: var(--purple); }
+    .step .num {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .step:nth-child(2) .num { color: var(--purple); }
+    .step h3 { font-size: 1.1rem; margin-bottom: 0.75rem; }
+    .step p { color: var(--muted); font-size: 0.9rem; line-height: 1.65; }
+    .step p + p { margin-top: 0.75rem; }
+
+    /* ── METHODOLOGY CARDS ── */
+    .grid3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 10px;
+      padding: 2rem 1.75rem;
+      border: 1px solid var(--border);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px -12px rgba(8, 21, 50, 0.15);
+    }
+    .card .ico {
+      width: 40px; height: 40px;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface2);
+    }
+    .card .ico svg {
+      width: 20px; height: 20px;
+      stroke: var(--accent); fill: none; stroke-width: 1.7;
+    }
+    .card h3 { font-size: 1rem; margin-bottom: 0.6rem; }
+    .card p { color: var(--muted); font-size: 0.85rem; line-height: 1.6; }
+    .card .meta {
+      margin-top: 1rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    /* ── CHECKLIST ── */
+    .consider {
+      columns: 2;
+      column-gap: 3rem;
+      max-width: 100%;
+      margin-top: 1.5rem;
+    }
+    .consider li {
+      list-style: none;
+      break-inside: avoid;
+      padding: 0.75rem 0 0.75rem 2rem;
+      position: relative;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .consider li::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 1rem;
+      width: 12px; height: 12px;
+      border-radius: 3px;
+      background: var(--accent);
+      box-shadow: 3px 3px 0 0 var(--purple-dim);
+    }
+    .consider li strong { font-weight: 500; color: var(--text); }
+    .consider li span { display: block; color: var(--muted); font-size: 0.8rem; line-height: 1.5; margin-top: 0.2rem; }
+
+    /* ── CREDENTIALS ── */
+    .cred-feature {
+      background: var(--text);
+      color: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      margin-top: 2rem;
+    }
+    .cred-feature .body { padding: 3rem; }
+    .cred-feature .body .section-tag { color: var(--accent); }
+    .cred-feature h2 { color: #ffffff !important; font-size: clamp(1.3rem, 2.5vw, 1.8rem); margin-bottom: 1rem; }
+    .cred-feature p { color: rgba(255,255,255,0.8); font-size: 0.95rem; margin-bottom: 1rem; }
+    .cred-feature .side {
+      background:
+        radial-gradient(300px 250px at 80% 10%, rgba(13,155,150,0.4), transparent 60%),
+        linear-gradient(160deg, rgba(69,12,157,0.6), rgba(8,21,50,0.3));
+      padding: 3rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.5rem;
+      border-left: 1px solid rgba(255,255,255,0.08);
+    }
+    .award { border-left: 3px solid var(--accent); padding-left: 1rem; }
+    .award .k { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+    .award .v { color: #ffffff; font-size: 1rem; margin-top: 0.3rem; }
+    .award .y { color: rgba(255,255,255,0.6); font-size: 0.8rem; }
+
+    .pubs-label {
+      margin-top: 2rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--purple);
+    }
+    .pubs { margin-top: 1rem; display: grid; gap: 1rem; }
+    .pub {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem 1.75rem;
+      border-left: 4px solid var(--purple);
+    }
+    .pub .tag { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--purple); font-weight: 600; }
+    .pub p { margin-top: 0.5rem; color: var(--text); font-size: 0.9rem; max-width: none; }
+    .pub p .authors { color: var(--muted); }
+    .pub p em { color: var(--muted); }
+    .pub a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    .pub a:hover { color: var(--purple); }
+
+    /* ── OTHER PROJECTS ── */
+    .other-projects {
+      margin-top: 3rem;
+      padding-top: 3rem;
+      border-top: 2px dashed var(--border);
+      position: relative;
+    }
+    .other-projects::before {
+      content: "Independent project work";
+      position: absolute;
+      top: -0.7rem;
+      left: 0;
+      background: var(--bg);
+      padding-right: 1rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .op-head { max-width: 720px; margin-bottom: 1.5rem; }
+    .op-head h3 { font-size: clamp(1.1rem, 2.5vw, 1.5rem); margin-bottom: 0.6rem; }
+    .op-head p { color: var(--muted); font-size: 0.9rem; }
+
+    .op-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .opcard {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.75rem;
+      border-top: 4px solid var(--accent);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .opcard:hover { transform: translateY(-3px); box-shadow: 0 12px 30px -12px rgba(8, 21, 50, 0.15); }
+    .opcard .tag { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+    .opcard h4 { font-size: 1rem; font-weight: 600; margin: 0.5rem 0; color: var(--text); line-height: 1.3; }
+    .opcard p { color: var(--muted); font-size: 0.85rem; line-height: 1.6; }
+    .opcard p em { color: var(--text); font-style: italic; }
+
+    /* ── REFERENCES ── */
+    .refs { columns: 2; column-gap: 3rem; margin-top: 1.5rem; }
+    .refs li { list-style: none; break-inside: avoid; margin-bottom: 1rem; color: var(--muted); font-size: 0.82rem; line-height: 1.55; }
+    .refs li strong { color: var(--text); font-weight: 500; }
+    .refs li em { font-style: italic; }
+    .refs li a { color: var(--accent); text-decoration: none; }
+    .refs li a:hover { color: var(--purple); }
+
+    /* ── CLOSING CTA ── */
+    .closing-cta {
+      background: linear-gradient(135deg, rgba(69,12,157,0.06) 0%, rgba(13,155,150,0.08) 100%);
+      border: 1px solid rgba(69,12,157,0.12);
+      border-radius: 8px;
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: center;
+      margin: 3rem 0;
+    }
+    .closing-cta h2 {
+      font-family: 'Lora', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+    }
+    .closing-cta p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      max-width: none;
+      margin: 0;
+    }
+    .btn-primary {
+      display: inline-block;
+      background: var(--accent);
+      color: #ffffff;
+      padding: 0.75rem 1.75rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    .footer-logo-text {
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy {
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .grid3 { grid-template-columns: 1fr 1fr; }
+      .cred-feature { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-toggle { display: flex; }
+      .nav-links {
+        position: fixed;
+        top: 0; right: 0;
+        height: 100vh;
+        width: 280px;
+        flex-direction: column;
+        background: var(--surface);
+        padding: 5rem 2rem 2rem;
+        gap: 1.5rem;
+        transform: translateX(100%);
+        transition: transform 0.3s;
+        box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+        z-index: 105;
+      }
+      .nav-links.open { transform: translateX(0); }
+      .page-header { padding: 6rem 1.5rem 2.5rem; }
+      .tagstrip { padding: 1rem 1.5rem; }
+      .content-wrap { padding: 0 1.5rem; }
+      .section-alt { margin: 0 -1.5rem; padding: 2rem 1.5rem; }
+      .steps { grid-template-columns: 1fr; }
+      .grid3 { grid-template-columns: 1fr; }
+      .consider { columns: 1; }
+      .refs { columns: 1; }
+      .op-grid { grid-template-columns: 1fr; }
+      .closing-cta { grid-template-columns: 1fr; text-align: center; padding: 2rem 1.5rem; }
+      .closing-cta .btn-primary { justify-self: center; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 1.5rem; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="blackcatlogo_no_bg.png" alt="BlackCat Bio" style="height: 28px;">
+    <span class="nav-logo-text">BlackCat Bio</span>
+  </a>
+  <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="index.html#how">Platform</a></li>
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="index.html#case-studies">Case Studies</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="index.html#team">Team</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="contact.html" class="nav-cta">Pilot on your program</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-grid"></div>
+  <div class="page-header-inner">
+    <a href="blog.html" class="back-link">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Blog
+    </a>
+    <p class="page-eyebrow">BlackCat Bio — Statistical Analysis Plans · Regulatory Biostatistics</p>
+    <h1>SAPs for <em>external & augmented control arms</em></h1>
+    <p class="lede">We write Statistical Analysis Plans for trials that borrow strength from data
+      outside the randomized comparison: single-arm studies anchored to an external control,
+      and randomized trials augmented with registry or historical patient-level data.</p>
+  </div>
+</div>
+
+<!-- TAGSTRIP -->
+<div class="tagstrip">
+  <div class="tagstrip-inner">
+    <span>External Control Arms</span>
+    <span>Augmented Control Arms</span>
+    <span>Augmented Randomized Trials</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- APPROACH -->
+  <div class="article-section">
+    <div class="section-tag">What we do</div>
+    <h2>Borrowing strength from outside the trial, defensibly</h2>
+    <p>External and augmented control designs let a sponsor strengthen the evidence from a
+      small or hard-to-enroll trial by drawing on patient-level data from prior clinical trials, registries,
+      or other real-world sources. These designs add precision and partially correct for
+      confounding, but they also invite the biases regulators worry about if the methodology isn't locked
+      down in advance.</p>
+    <p>The <strong>Statistical Analysis Plan</strong> is where this gets decided. A credible plan
+      specifies, before anyone looks at outcomes, how external patients are selected, how the comparison is constructed,
+      how residual bias is detected and limited, and how much weight the borrowed data are allowed to
+      carry. We write that plan, grounded in designs that have already cleared FDA review.</p>
+  </div>
+
+  <!-- STRATEGY -->
+  <div class="article-section">
+    <div class="section-tag">Our strategy</div>
+    <h2>Starting from precedent, then adapting to your protocol</h2>
+    <p>Every plan begins with analysis plans that regulators have already accepted. We fit them
+      to the specifics of your study.</p>
+    <div class="steps">
+      <div class="step">
+        <span class="num">Step 01</span>
+        <h3>Anchor on approved-trial templates</h3>
+        <p>We begin from SAP templates drawn from trials that led to FDA approval in the same indication,
+          ideally trials that used the same family of external- or augmented-control methodology.</p>
+        <p>Starting from designs already vetted in review gives the plan a defensible spine: the estimand
+          framing, control-arm construction, bias diagnostics, and decision rules all come from language that
+          has cleared the bar.</p>
+      </div>
+      <div class="step">
+        <span class="num">Step 02</span>
+        <h3>Apply the template to your protocol</h3>
+        <p>We then map that template onto your protocol: its endpoints and estimands, eligibility criteria,
+          visit schedule, available external data sources, and the operating characteristics you need for
+          the decision at hand.</p>
+        <p>The result is a plan tailored to your study yet rooted in precedent. Every adaptation is a
+          deliberate, documented departure from a known-acceptable design.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- INSIDE THE SAP -->
+  <div class="article-section">
+    <div class="section-tag">Inside the SAP</div>
+    <h2>What we build into every analysis plan</h2>
+    <p>These are the components of a plan for an external or augmented control design,
+      from selecting source patients through anchoring inference back to the randomized result.</p>
+    <div class="grid3">
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 6h18M6 12h12M9 18h6"/></svg></div>
+        <h3>Source selection & eligibility alignment</h3>
+        <p>We screen external or registry patients to closely match your protocol's eligibility criteria,
+          defining the index visit, requiring aligned follow-up, and applying temporal eligibility so
+          background therapy and assay methods are consistent with the trial era.</p>
+        <div class="meta">Index visit · Follow-up window · Era matching</div>
+      </div>
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 4v16h16M8 16l4-6 3 3 4-7"/></svg></div>
+        <h3>Estimands, intercurrent events & missing data</h3>
+        <p>Intercurrent events are handled per the protocol's estimand. Missing endpoint values are
+          addressed with pre-specified rules: multiple imputation, and tightly bounded interpolation
+          only where flanking measurements permit.</p>
+        <div class="meta">Estimand-aligned · Multiple imputation</div>
+      </div>
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24"><circle cx="8" cy="9" r="4"/><circle cx="17" cy="15" r="3.2"/><path d="M2 21c0-3.3 2.7-6 6-6"/></svg></div>
+        <h3>Constructing the external control arm</h3>
+        <p>We balance source and trial patients with propensity-score methods: matching where feasible,
+          inverse-probability weighting as fallback, plus trimming and caps so no single patient
+          dominates. We report the resulting effective sample size.</p>
+        <div class="meta">Propensity score · Matching or IPTW</div>
+      </div>
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3v18M4 8l8 4 8-4M4 16l8 4 8-4"/></svg></div>
+        <h3>Bias diagnostics & partial correction</h3>
+        <p>We compare the external control to the randomized control to estimate residual bias, then
+          apply a graduated correction. The plan borrows more when bias is small and less when it is large, so
+          borrowed data never override the randomized signal.</p>
+        <div class="meta">Internal benchmark · Dynamic borrowing</div>
+      </div>
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 12h6l2-5 3 14 2-9h5"/></svg></div>
+        <h3>Combining the evidence</h3>
+        <p>The primary estimate combines the randomized comparison with the partially bias-corrected
+          external-control comparison, weighted by the information each contributes. The combined
+          result stays anchored to the randomized trial.</p>
+        <div class="meta">Anchored to randomization</div>
+      </div>
+      <div class="card">
+        <div class="ico"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 11l3 3 5-6"/></svg></div>
+        <h3>Pre-specification & integrity</h3>
+        <p>All methods, thresholds, and decision rules are finalized in the SAP before any outcome data
+          are examined. We document the regulatory grounding: FDA RWD/RWE guidance, ICH E10, and
+          established methods literature.</p>
+        <div class="meta">Locked pre-analysis · Regulatory-grounded</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONSIDERATIONS -->
+  <div class="article-section">
+    <div class="section-tag">Considerations we work through</div>
+    <h2>The questions a control-arm SAP has to answer</h2>
+    <ul class="consider">
+      <li><strong>Index / baseline visit definition</strong>
+        <span>Earliest visit meeting the protocol's disease and activity criteria.</span></li>
+      <li><strong>Follow-up alignment</strong>
+        <span>Source follow-up long enough to reach the primary-endpoint landmark.</span></li>
+      <li><strong>Temporal eligibility</strong>
+        <span>Era of background therapy, imaging, and quantification methods held consistent.</span></li>
+      <li><strong>Prior-therapy & overlap exclusions</strong>
+        <span>Removing prior exposures and any patients already in the trial.</span></li>
+      <li><strong>Propensity-score covariate set</strong>
+        <span>Demographics, disease duration/subtype, baseline measures, organ involvement, biomarkers.</span></li>
+      <li><strong>Matching vs. weighting</strong>
+        <span>1:1 matching first; IPTW with trimming when matching discards too many patients.</span></li>
+      <li><strong>Effective sample size</strong>
+        <span>Reported after matching or weighting, accounting for discarded or re-weighted patients.</span></li>
+      <li><strong>Residual-bias estimation</strong>
+        <span>External control vs. randomized control as the internal reference.</span></li>
+      <li><strong>Graduated bias correction</strong>
+        <span>Strength of the adjustment scaled to detected bias and its precision.</span></li>
+      <li><strong>Evidence combination weights</strong>
+        <span>Information-based weighting that keeps inference anchored to randomization.</span></li>
+      <li><strong>Sensitivity & robustness</strong>
+        <span>Re-running under alternative assumptions; with/without imputed values.</span></li>
+      <li><strong>Pre-specification & fit-for-purpose</strong>
+        <span>Locked before outcomes; framed for go/no-go and Phase 3 design.</span></li>
+    </ul>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <div class="article-section">
+    <div class="section-tag">Experience</div>
+    <h2>The team behind the method</h2>
+
+    <div class="cred-feature">
+      <div class="body">
+        <div class="section-tag">Friends of Cancer Research</div>
+        <h2>We helped create the Synthetic Control Arm</h2>
+        <p>Our principal led the creation of the Synthetic Control Arm (SCA) database, a novel approach for
+          the analysis of single-arm trials that statistically matches experimentally treated patients to
+          standard-of-care patients drawn from completed trials across sponsors.</p>
+        <p>The offering leveraged a clinical data repository spanning thousands of oncology trials to form a
+          control arm of patients whose baseline disease and demographic characteristics match those of the
+          experimentally treated patients in a present-day single-arm trial.</p>
+      </div>
+      <div class="side">
+        <div class="award">
+          <div class="k">Scrip Award</div>
+          <div class="v">Best Technological Development in Clinical Trials</div>
+          <div class="y">Synthetic Control Arm · 2017</div>
+        </div>
+        <div class="award">
+          <div class="k">Therapeutic reach</div>
+          <div class="v">Oncology · Rare disease · ILD · Anticoagulation reversal</div>
+        </div>
+        <div class="award">
+          <div class="k">Design types</div>
+          <div class="v">External & augmented control arms</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pubs-label">From the SCA program</div>
+    <div class="pubs">
+      <div class="pub">
+        <span class="tag">Peer-reviewed · ASCO 2019</span>
+        <p><span class="authors">Davi R, Chandler M, Elashoff B, Ferris AS, Howland A, Lee D, Majumdar A,
+          Stewart M, Strianese L, Stuart E, Yin X, Yver A. (2019).</span>
+          Non-small cell lung cancer (NSCLC) case study examining whether results in a randomized control
+          arm are replicated by a synthetic control arm (SCA). <em>Journal of Clinical Oncology,
+          37(15_suppl), 9108.</em>
+          <a href="https://ascopubs.org/doi/10.1200/JCO.2019.37.15_suppl.9108" target="_blank" rel="noopener">View abstract →</a></p>
+      </div>
+      <div class="pub">
+        <span class="tag">Project background</span>
+        <p>The broader Friends of Cancer Research SCA project is described in the 2018 white paper.
+          <a href="https://friendsofcancerresearch.org/wp-content/uploads/2018_AM_SCA_White_Paper.pdf" target="_blank" rel="noopener">Read the white paper →</a></p>
+      </div>
+    </div>
+
+    <div class="other-projects">
+      <div class="op-head">
+        <h3>Additional external- and augmented-control engagements</h3>
+        <p>Separate, more recent project work applying external- and augmented-control methods beyond the
+          original SCA program.</p>
+      </div>
+      <div class="op-grid">
+        <div class="opcard">
+          <span class="tag">Augmented control design</span>
+          <h4>Interstitial lung disease (ILD)</h4>
+          <p>Designed an augmented control arm strategy for an ILD study, supplementing a randomized
+            placebo arm with matched registry patients while retaining the randomized comparison as an
+            internal benchmark for bias detection and partial correction.</p>
+        </div>
+        <div class="opcard">
+          <span class="tag">Cross-source comparison · Hemostasis</span>
+          <h4>Anticoagulation reversal (DOAC bleeding)</h4>
+          <p>Used propensity-score matching to compare 30-day mortality between patients who received
+            andexanet alfa for life-threatening bleeding related to direct oral anticoagulants (from
+            the single-arm <em>ANNEXA-4</em> trial) and patients who received prothrombin complex
+            concentrate (from the <em>ORANGE</em> registry).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REFERENCES -->
+  <div class="article-section">
+    <div class="section-tag">Methods & regulatory grounding</div>
+    <h2>The literature we build on</h2>
+    <ul class="refs">
+      <li><strong>Austin, P. C., & Stuart, E. A. (2015).</strong> Moving towards best practice when using
+        inverse probability of treatment weighting (IPTW) using the propensity score to estimate causal
+        treatment effects in observational studies. <em>Statistics in Medicine, 34(28), 3661–3679.</em></li>
+      <li><strong>FDA (2022).</strong> Considerations for the Use of Real-World Data and Real-World Evidence
+        to Support Regulatory Decision-Making for Drug and Biological Products. <em>Draft Guidance.</em></li>
+      <li><strong>Li, L., & Jemielita, T. (2023).</strong> Confounding adjustment in the analysis of
+        augmented randomized controlled trial with hybrid control arm.
+        <em>Statistics in Medicine, 42(16), 2855–2872.</em></li>
+      <li><strong>Stuart, E. A., Cole, S. R., Bradshaw, C. P., & Leaf, P. J. (2011).</strong> The use of
+        propensity scores to assess the generalizability of results from randomized trials.
+        <em>Journal of the Royal Statistical Society, Series A, 174(2), 369–386.</em></li>
+      <li><strong>ICH E10.</strong> Choice of Control Group and Related Issues in Clinical Trials.</li>
+    </ul>
+  </div>
+
+  <!-- CLOSING CTA -->
+  <div class="closing-cta">
+    <div>
+      <h2>Have a single-arm or under-powered trial?</h2>
+      <p>Send us your protocol and the decision you need to make. We'll tell you whether an external or augmented control design fits.</p>
+    </div>
+    <a class="btn-primary" href="contact.html">Contact BlackCat Bio</a>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="blackcatlogo_no_bg.png" alt="BlackCat Bio" style="height: 28px;">
+    <span class="footer-logo-text">BlackCat Bio</span>
+  </div>
+  <ul class="footer-links">
+    <li><a href="index.html#how">Platform</a></li>
+    <li><a href="index.html#case-studies">Case Studies</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="index.html#team">Team</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 BlackCat Bio, Inc.</div>
+</footer>
+
+<script>
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('active');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      navToggle.classList.remove('active');
+    });
+  });
+</script>
+
+</body>
+</html>
