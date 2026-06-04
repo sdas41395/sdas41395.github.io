@@ -1133,7 +1133,7 @@
 
     .offers-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
     }
 
@@ -1151,7 +1151,8 @@
       border-color: rgba(13,155,150,0.3);
     }
 
-    .offer-card:nth-child(2):hover {
+    .offer-card:nth-child(2):hover,
+    .offer-card:nth-child(4):hover {
       border-color: rgba(69,12,157,0.25);
     }
 
@@ -1170,7 +1171,8 @@
       transform: scaleX(1);
     }
 
-    .offer-card:nth-child(2)::before {
+    .offer-card:nth-child(2)::before,
+    .offer-card:nth-child(4)::before {
       background: var(--purple);
     }
 
@@ -1178,7 +1180,8 @@
       background: linear-gradient(90deg, var(--accent), var(--purple));
     }
 
-    .offer-card:nth-child(2) .offer-title {
+    .offer-card:nth-child(2) .offer-title,
+    .offer-card:nth-child(4) .offer-title {
       color: var(--purple);
     }
 
@@ -1797,7 +1800,7 @@
 </div>
 
 <!-- WHAT WE OFFER -->
-<section class="offers">
+<section class="offers" id="features">
   <div class="section-inner">
     <div class="offers-header reveal">
       <div class="section-tag">What we offer</div>
@@ -1815,6 +1818,10 @@
       <div class="offer-card">
         <div class="offer-title">SAP Generation</div>
         <div class="offer-desc">Starting from a protocol and study design, we generate a complete, submission-ready SAP draft in days. Every decision is evidence-backed and reviewed by your statistician before anything is finalized.</div>
+      </div>
+      <div class="offer-card">
+        <div class="offer-title">TFL Generation</div>
+        <div class="offer-desc">We produce Tables, Figures, and Listings directly from your SAP and analysis datasets. Shell tables, mock figures, and production TFL packages delivered with full traceability back to the statistical methods specified in your plan.</div>
       </div>
     </div>
   </div>
@@ -1878,7 +1885,7 @@
 </section>
 
 <!-- FEATURES -->
-<section class="features" id="features">
+<section class="features" id="security">
   <div class="section-inner">
     <div class="features-header reveal">
       <div class="section-tag">Security &amp; compliance</div>
