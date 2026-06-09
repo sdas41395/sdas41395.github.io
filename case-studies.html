@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Research | BlackCat Bio</title>
+  <title>Case Studies | BlackCat Bio</title>
   <link rel="icon" type="image/png" href="blackcatlogo_no_bg.png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -159,57 +159,61 @@
       max-width: 55ch;
     }
 
-    /* ── BLOG GRID ── */
-    .blog-content {
+    /* ── CASE STUDIES ── */
+    .case-studies {
       max-width: 1280px;
       margin: 0 auto;
       padding: 3rem 4rem 5rem;
     }
 
-    .blog-grid {
+    .case-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
     }
 
-    .blog-card {
-      display: block;
+    .case-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 2.5rem;
-      text-decoration: none;
-      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      cursor: pointer;
+      transition: border-color 0.25s, transform 0.25s, background 0.25s, box-shadow 0.25s;
       position: relative;
       overflow: hidden;
+      text-decoration: none;
+      display: block;
     }
-    .blog-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 16px 40px -16px rgba(8, 21, 50, 0.12);
-      border-color: var(--accent-glow);
-    }
-    .blog-card::before {
-      content: "";
+
+    .case-card::before {
+      content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 4px;
       background: linear-gradient(90deg, var(--accent), var(--purple));
       opacity: 0;
-      transition: opacity 0.2s;
+      transition: opacity 0.3s ease;
     }
-    .blog-card:hover::before { opacity: 1; }
 
-    .blog-card-type {
+    .case-card:hover {
+      border-color: var(--accent-glow);
+      background: var(--surface2);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px -16px rgba(8, 21, 50, 0.12);
+    }
+
+    .case-card:hover::before { opacity: 1; }
+
+    .case-type {
       font-size: 0.7rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--accent);
       font-weight: 600;
-      margin-bottom: 0.75rem;
+      margin-bottom: 1rem;
     }
-    .blog-card-type.purple { color: var(--purple); }
 
-    .blog-card-title {
+    .case-title {
       font-family: 'Lora', serif;
       font-size: 1.4rem;
       font-weight: 600;
@@ -218,25 +222,26 @@
       margin-bottom: 0.75rem;
     }
 
-    .blog-card-desc {
-      color: var(--muted);
+    .case-desc {
       font-size: 0.9rem;
+      color: var(--muted);
       line-height: 1.65;
-      max-width: 65ch;
       margin-bottom: 1.25rem;
     }
 
-    .blog-card-arrow {
+    .case-arrow {
       font-size: 0.8rem;
       font-weight: 500;
       color: var(--accent);
       letter-spacing: 0.02em;
     }
-    .blog-card-arrow span {
+
+    .case-arrow span {
       display: inline-block;
       transition: transform 0.2s;
     }
-    .blog-card:hover .blog-card-arrow span { transform: translateX(4px); }
+
+    .case-card:hover .case-arrow span { transform: translateX(4px); }
 
     .page-spacer {
       flex: 1;
@@ -310,10 +315,10 @@
       }
       .nav-links.open { transform: translateX(0); }
       .page-header { padding: 6rem 1.5rem 2.5rem; }
-      .blog-content { padding: 2rem 1.5rem 3rem; }
-      .blog-grid { grid-template-columns: 1fr; }
-      .blog-card { padding: 1.75rem; }
-      .blog-card-title { font-size: 1.2rem; }
+      .case-studies { padding: 2rem 1.5rem 3rem; }
+      .case-grid { grid-template-columns: 1fr; }
+      .case-card { padding: 1.75rem; }
+      .case-title { font-size: 1.2rem; }
       footer { flex-direction: column; gap: 1rem; text-align: center; padding: 1.5rem; }
       .footer-links { justify-content: center; }
     }
@@ -331,8 +336,8 @@
   <ul class="nav-links">
     <li><a href="index.html#how">Platform</a></li>
     <li><a href="index.html#features">Features</a></li>
-    <li><a href="case-studies.html">Case Studies</a></li>
-    <li><a href="blog.html" class="active">Research</a></li>
+    <li><a href="case-studies.html" class="active">Case Studies</a></li>
+    <li><a href="blog.html">Research</a></li>
     <li><a href="index.html#team">Team</a></li>
     <li><a href="contact.html">Contact</a></li>
     <li><a href="contact.html" class="nav-cta">Pilot on your program</a></li>
@@ -343,27 +348,27 @@
 <div class="page-header">
   <div class="page-header-grid"></div>
   <div class="page-header-inner">
-    <h1>Research</h1>
-    <p>Case studies, deep dives, and perspectives from the BlackCat Bio team.</p>
+    <h1>Case Studies</h1>
+    <p>Curated results from the field from the BlackCat Bio Team.</p>
   </div>
 </div>
 
-<!-- BLOG LISTING -->
-<div class="blog-content">
-  <div class="blog-grid">
+<!-- CASE STUDIES -->
+<div class="case-studies">
+  <div class="case-grid">
 
-    <a href="fda-comment.html" class="blog-card">
-      <div class="blog-card-type">Deep Dive · Regulatory Biostatistics · AI in Clinical Trials</div>
-      <div class="blog-card-title">Our comment to the FDA on AI-assisted statistical review</div>
-      <div class="blog-card-desc">The FDA asked how AI should be used to optimize early-phase clinical trials. We proposed a focused use case: reviewing the statistics in Bayesian dose-escalation and dose-expansion protocols, with the human reviewer in charge of every call.</div>
-      <div class="blog-card-arrow">Read article <span>→</span></div>
+    <a href="case-study.html" class="case-card">
+      <div class="case-type">Phase I · First-in-Human</div>
+      <div class="case-title">71 issues. Days to finalization. One AI review pass changed everything.</div>
+      <div class="case-desc">A sponsor commissioned a BlackCat Bio AI evaluation of a Phase 1 FIH protocol and SAP before sign-off. 71 issues found on the first pass — each with a recommended fix — delivered in under 4 hours.</div>
+      <div class="case-arrow">Read case study <span>→</span></div>
     </a>
 
-    <a href="sap-control-arms.html" class="blog-card">
-      <div class="blog-card-type">Deep Dive · Regulatory Biostatistics</div>
-      <div class="blog-card-title">SAPs for External & Augmented Control Arms</div>
-      <div class="blog-card-desc">How we write Statistical Analysis Plans for trials that borrow strength from data outside the randomized comparison, anchored in regulatory precedent and locked before any outcome data are examined.</div>
-      <div class="blog-card-arrow">Read article <span>→</span></div>
+    <a href="case-study-ph3.html" class="case-card">
+      <div class="case-type">Phase III · Rare Disease · Pulmonary</div>
+      <div class="case-title">Delivering a Phase 3 SAP in hours — under continuous fire</div>
+      <div class="case-desc">A novel Pulmonary trial with no methodological precedent, cascading protocol revisions, and a last-minute interim analysis. Finished within hours of protocol lock.</div>
+      <div class="case-arrow">Read case study <span>→</span></div>
     </a>
 
   </div>

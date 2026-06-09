@@ -365,7 +365,7 @@
     }
 
     .section-inner {
-      max-width: 1200px;
+      max-width: 1280px;
       margin: 0 auto;
       padding: 0 4rem;
     }
@@ -919,17 +919,19 @@
     /* ── FOOTER ── */
     footer {
       border-top: 1px solid rgba(13,155,150,0.15);
-      padding: 2.5rem 4rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      padding: 1.5rem 4rem;
       background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
     }
 
     .footer-logo {
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      flex-shrink: 0;
     }
 
     .footer-logo-text {
@@ -942,8 +944,9 @@
 
     .footer-links {
       display: flex;
-      gap: 2rem;
+      gap: 1.75rem;
       list-style: none;
+      flex-wrap: wrap;
     }
 
     .footer-links a {
@@ -958,6 +961,7 @@
     .footer-copy {
       font-size: 0.72rem;
       color: rgba(122, 139, 160, 0.5);
+      flex-shrink: 0;
     }
 
     /* ── ANIMATIONS ── */
@@ -1421,13 +1425,12 @@
 
       footer {
         flex-direction: column;
-        gap: 1.5rem;
+        gap: 1rem;
         text-align: center;
-        padding: 2rem 3rem;
+        padding: 1.5rem 2rem;
       }
 
       .footer-links {
-        flex-wrap: wrap;
         justify-content: center;
       }
     }
@@ -1723,8 +1726,8 @@
   <ul class="nav-links">
     <li><a href="#how">Platform</a></li>
     <li><a href="#features">Features</a></li>
-    <li><a href="#case-studies">Case Studies</a></li>
-    <li><a href="blog.html">Blog</a></li>
+    <li><a href="case-studies.html">Case Studies</a></li>
+    <li><a href="blog.html">Research</a></li>
     <li><a href="#team">Team</a></li>
     <li><a href="contact.html">Contact</a></li>
     <li><a href="contact.html" class="nav-cta">Pilot on your program</a></li>
@@ -1745,7 +1748,7 @@
 
     <div class="hero-actions">
       <a href="contact.html" class="btn-primary">Pilot on your program</a>
-      <a href="#how" class="btn-ghost">See how it works</a>
+      <a href="case-studies.html" class="btn-ghost">See case studies</a>
     </div>
 
     <div class="hero-badge">
@@ -1809,19 +1812,19 @@
     <div class="offers-grid reveal">
       <div class="offer-card">
         <div class="offer-title">Protocol Review &amp; Design</div>
-        <div class="offer-desc">Already have a protocol? We pressure-test it against FDA guidance, CRLs, and precedent, and go further. If your endpoints, objectives, or design decisions don't hold together, we flag it and help you fix it before it reaches the agency.</div>
+        <div class="offer-desc">A single misaligned endpoint can trigger a Complete Response Letter and cost you a year. We stress-test your protocol against FDA guidance, CRLs, and precedent — flagging every gap before it reaches the agency.</div>
       </div>
       <div class="offer-card">
         <div class="offer-title">SAP Review &amp; Optimization</div>
-        <div class="offer-desc">Beyond checking your SAP against regulatory standards, we reassess decisions like sample size and power so your trial is better designed to complete and succeed.</div>
+        <div class="offer-desc">Under-powered trials fail quietly — sponsors discover the problem after the data is locked. We reassess your sample size, power, and analytic strategy against regulatory precedent so the statistics hold up at submission.</div>
       </div>
       <div class="offer-card">
         <div class="offer-title">SAP Generation</div>
-        <div class="offer-desc">Starting from a protocol and study design, we generate a complete, submission-ready SAP draft in days. Every decision is evidence-backed and reviewed by your statistician before anything is finalized.</div>
+        <div class="offer-desc">Waiting weeks for a SAP draft while your timeline burns is the norm — it doesn't have to be. We generate a complete, submission-ready SAP in days, every decision evidence-backed and reviewed by a credentialed statistician.</div>
       </div>
       <div class="offer-card">
         <div class="offer-title">TFL Generation</div>
-        <div class="offer-desc">We produce Tables, Figures, and Listings directly from your SAP and analysis datasets. Shell tables, mock figures, and production TFL packages delivered with full traceability back to the statistical methods specified in your plan.</div>
+        <div class="offer-desc">Manual TFL production is slow, error-prone, and the last bottleneck before submission. We produce Tables, Figures, and Listings directly from your SAP with full traceability — shell tables to production packages, delivered in hours.</div>
       </div>
     </div>
   </div>
@@ -1939,35 +1942,6 @@
 </section>
 
 <!-- QUOTE -->
-<!-- CASE STUDIES -->
-<section class="case-studies" id="case-studies">
-  <div class="section-inner">
-    <div class="case-studies-header reveal">
-      <div>
-        <div class="section-tag">Case Studies</div>
-        <h2>Results from the field.</h2>
-      </div>
-      <a href="contact.html" class="btn-ghost">Request full access →</a>
-    </div>
-
-    <div class="case-grid reveal">
-      <a href="case-study.html" class="case-card">
-        <div class="case-type">Phase I · First-in-Human</div>
-        <div class="case-title">71 issues. Days to finalization. One AI review pass changed everything.</div>
-        <div class="case-desc">A sponsor commissioned a BlackCat Bio AI evaluation of a Phase 1 FIH protocol and SAP before sign-off. 71 issues found on the first pass — each with a recommended fix — delivered in under 4 hours.</div>
-        <div class="case-arrow">Read case study <span>→</span></div>
-      </a>
-
-      <a href="case-study-ph3.html" class="case-card">
-        <div class="case-type">Phase III · Rare Disease · Pulmonary</div>
-        <div class="case-title">Delivering a Phase 3 SAP in hours — under continuous fire</div>
-        <div class="case-desc">A novel Pulmonary trial with no methodological precedent, cascading protocol revisions, and a last-minute interim analysis. Finished within hours of protocol lock.</div>
-        <div class="case-arrow">Read case study <span>→</span></div>
-      </a>
-
-    </div>
-  </div>
-</section>
 
 <!-- TEAM -->
 <section class="team" id="team">
@@ -2094,13 +2068,15 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo"><img src="blackcatlogo_no_bg.png" alt="BlackCat Bio" style="height: 28px;"><span class="footer-logo-text">BlackCat Bio</span></div>
+  <div class="footer-logo"><img src="blackcatlogo_no_bg.png" alt="BlackCat Bio" style="height: 24px;"><span class="footer-logo-text">BlackCat Bio</span></div>
   <ul class="footer-links">
     <li><a href="#how">Platform</a></li>
-    <li><a href="#case-studies">Case Studies</a></li>
-    <li><a href="blog.html">Blog</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="case-studies.html">Case Studies</a></li>
+    <li><a href="blog.html">Research</a></li>
     <li><a href="#team">Team</a></li>
     <li><a href="contact.html">Contact</a></li>
+    <li><a href="https://www.linkedin.com/company/blackcat-bio" target="_blank" rel="noopener">LinkedIn</a></li>
   </ul>
   <div class="footer-copy">© 2025 BlackCat Bio, Inc.</div>
 </footer>
