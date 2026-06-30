@@ -173,7 +173,8 @@
     }
 
     .blog-card {
-      display: block;
+      display: flex;
+      flex-direction: column;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 12px;
@@ -216,6 +217,7 @@
       color: var(--text);
       line-height: 1.3;
       margin-bottom: 0.75rem;
+      min-height: 3.64rem; /* reserve 2 lines so descriptions align across the row */
     }
 
     .blog-card-desc {
@@ -231,6 +233,7 @@
       font-weight: 500;
       color: var(--accent);
       letter-spacing: 0.02em;
+      margin-top: auto; /* pin to bottom so it aligns across cards */
     }
     .blog-card-arrow span {
       display: inline-block;
@@ -313,7 +316,7 @@
       .blog-content { padding: 2rem 1.5rem 3rem; }
       .blog-grid { grid-template-columns: 1fr; }
       .blog-card { padding: 1.75rem; }
-      .blog-card-title { font-size: 1.2rem; }
+      .blog-card-title { font-size: 1.2rem; min-height: 0; }
       footer { flex-direction: column; gap: 1rem; text-align: center; padding: 1.5rem; }
       .footer-links { justify-content: center; }
     }
@@ -351,6 +354,13 @@
 <!-- BLOG LISTING -->
 <div class="blog-content">
   <div class="blog-grid">
+
+    <a href="e9r1-estimands.html" class="blog-card">
+      <div class="blog-card-type purple">Explainer · Estimands · ICH E9(R1)</div>
+      <div class="blog-card-title">A plain-language rewrite of ICH E9(R1)</div>
+      <div class="blog-card-desc">Defining the effect you actually want to measure. Estimands, intercurrent events, and the five strategies for handling them &mdash; in everyday language, with worked examples and a figure for every strategy.</div>
+      <div class="blog-card-arrow">Read article <span>&rarr;</span></div>
+    </a>
 
     <a href="fda-comment.html" class="blog-card">
       <div class="blog-card-type">Deep Dive · Regulatory Biostatistics · AI in Clinical Trials</div>

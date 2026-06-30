@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Plain-Language Rewrite of ICH E9(R1) | BlackCat Bio</title>
+  <meta name="description" content="Defining the effect you actually want to measure: a plain-language rewrite of ICH E9(R1) on estimands and the five strategies for handling intercurrent events, with worked examples and figures." />
+
+  <!-- Open Graph / LinkedIn -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="A Plain-Language Rewrite of ICH E9(R1)" />
+  <meta property="og:description" content="Defining the effect you actually want to measure: estimands, intercurrent-event strategies, and worked examples, in plain language." />
+  <meta property="og:site_name" content="BlackCat Bio" />
+
+  <link rel="icon" type="image/png" href="blackcatlogo_no_bg.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #f4f4f4;
+      --surface: #ffffff;
+      --surface2: #eaf2f1;
+      --border: rgba(8, 21, 50, 0.1);
+      --accent: #0d9b96;
+      --accent-dim: rgba(13, 155, 150, 0.1);
+      --accent-glow: rgba(13, 155, 150, 0.2);
+      --purple: #450c9d;
+      --purple-dim: rgba(69, 12, 157, 0.08);
+      --light-blue: #d1e1e0;
+      --text: #081532;
+      --muted: #6c6c6c;
+      --ink: #33405a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    img { max-width: 100%; height: auto; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 4rem;
+      background: rgba(244, 244, 244, 0.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 0.65rem; text-decoration: none; }
+    .nav-logo-text { font-family: 'Lora', serif; font-size: 1.15rem; font-weight: 700; color: #081532; letter-spacing: -0.02em; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--accent);
+      color: #ffffff !important;
+      padding: 0.5rem 1.25rem;
+      border-radius: 3px;
+      font-weight: 600 !important;
+      letter-spacing: 0.04em !important;
+      transition: opacity 0.2s !important;
+    }
+    .nav-cta:hover { opacity: 0.85; color: #ffffff !important; }
+
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 110; }
+    .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text); transition: 0.3s; }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      position: relative;
+      padding: 8rem 4rem 4rem;
+      background: linear-gradient(135deg, rgba(69,12,157,0.04) 0%, rgba(13,155,150,0.08) 100%);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .page-header-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.4;
+    }
+    .page-header-inner { position: relative; max-width: 1200px; margin: 0 auto; z-index: 2; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      color: var(--accent); font-size: 0.8rem; text-decoration: none;
+      text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; margin-bottom: 1.5rem;
+    }
+    .back-link svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .back-link:hover { color: var(--purple); }
+    .page-eyebrow { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+    .page-header h1 {
+      font-family: 'Lora', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600; line-height: 1.2; color: var(--text); margin-bottom: 1.25rem;
+    }
+    .page-header h1 em { font-style: italic; color: var(--accent); }
+    .page-header .lede { font-size: 1.1rem; color: var(--muted); max-width: 60ch; line-height: 1.7; }
+
+    /* ── SOURCE CALLOUT (in header) ── */
+    .docket-callout {
+      margin-top: 2rem;
+      display: inline-flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem;
+      background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--accent);
+      border-radius: 8px; padding: 1.25rem 1.5rem;
+    }
+    .docket-callout .dc-meta { display: flex; flex-direction: column; gap: 0.2rem; }
+    .docket-callout .dc-k { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+    .docket-callout .dc-v { font-size: 0.95rem; color: var(--text); font-weight: 500; }
+    .docket-callout .dc-divider { width: 1px; align-self: stretch; background: var(--border); }
+    .docket-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--accent); color: #ffffff; padding: 0.7rem 1.4rem;
+      border-radius: 4px; font-weight: 600; font-size: 0.85rem; text-decoration: none; transition: opacity 0.2s;
+    }
+    .docket-btn:hover { opacity: 0.85; }
+    .docket-btn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+    /* ── TAGSTRIP ── */
+    .tagstrip { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1.25rem 4rem; }
+    .tagstrip-inner { max-width: 900px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 0.75rem 2rem; }
+    .tagstrip span { color: var(--muted); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; }
+    .tagstrip span::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+    .tagstrip span:nth-child(2)::before { background: var(--purple); }
+    .tagstrip span:nth-child(3)::before { background: var(--light-blue); }
+
+    /* ── CONTENT SECTIONS ── */
+    .content-wrap { max-width: 1200px; margin: 0 auto; padding: 0 4rem; }
+
+    .article-section { padding: 3.5rem 0; border-bottom: 1px solid var(--border); }
+    .article-section:last-child { border-bottom: none; }
+
+    .section-tag { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 1rem; }
+
+    .article-section h2 {
+      font-family: 'Lora', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 600; color: var(--text); margin-bottom: 1rem; line-height: 1.25;
+    }
+    .article-section h3 { font-family: 'Lora', serif; font-size: 1.25rem; font-weight: 600; color: var(--text); margin-bottom: 0.75rem; }
+    .article-section h3 .aka { font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 0.85rem; color: var(--purple); letter-spacing: 0.02em; }
+
+    .article-section p { color: var(--ink); font-size: 1rem; line-height: 1.75; margin-bottom: 1rem; max-width: 75ch; }
+    .article-section p strong { color: var(--text); font-weight: 500; }
+    .article-section p a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    .article-section p a:hover { color: var(--purple); }
+
+    .strategy-block { margin-top: 2.5rem; }
+    .strategy-block:first-of-type { margin-top: 2rem; }
+
+    /* ── FIVE PARTS LIST ── */
+    .parts { list-style: none; counter-reset: part; margin-top: 1.5rem; display: grid; gap: 0.75rem; }
+    .parts li {
+      counter-increment: part;
+      position: relative;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+      padding: 1.1rem 1.25rem 1.1rem 3.5rem; font-size: 0.95rem; color: var(--muted);
+    }
+    .parts li::before {
+      content: counter(part);
+      position: absolute; left: 1rem; top: 1rem;
+      width: 1.6rem; height: 1.6rem; border-radius: 50%;
+      background: var(--accent-dim); color: var(--accent);
+      font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center;
+    }
+    .parts li strong { color: var(--text); font-weight: 600; }
+
+    /* ── TWO-DEF GRID ── */
+    .defgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.75rem; }
+    .def {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.75rem;
+      border-left: 4px solid var(--accent);
+    }
+    .def:nth-child(2) { border-left-color: var(--purple); }
+    .def .d-k { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 0.5rem; }
+    .def:nth-child(2) .d-k { color: var(--purple); }
+    .def h4 { font-family: 'Lora', serif; font-size: 1.1rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; }
+    .def p { color: var(--muted); font-size: 0.9rem; line-height: 1.65; max-width: none; margin: 0; }
+
+    /* ── FIGURES ── */
+    figure { margin: 1.75rem 0; }
+    figure img {
+      width: 100%; display: block; background: #ffffff;
+      border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem;
+    }
+    figcaption { color: var(--muted); font-size: 0.85rem; font-style: italic; margin-top: 0.7rem; text-align: center; line-height: 1.55; }
+    figcaption.note { font-size: 0.78rem; }
+
+    .fig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 2rem; margin-top: 1.5rem; }
+    .fig-grid figure { margin: 0; }
+    .event-group { margin-top: 2.5rem; }
+    .event-group > h3 { color: var(--purple); }
+
+    /* ── TABLES ── */
+    .table-scroll { overflow-x: auto; margin-top: 1.75rem; border: 1px solid var(--border); border-radius: 10px; }
+    .wx-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; min-width: 880px; background: var(--surface); }
+    .wx-table th {
+      background: var(--surface2); text-align: left; padding: 0.85rem 1rem;
+      font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text);
+      font-weight: 700; border-bottom: 1px solid var(--border); white-space: nowrap;
+    }
+    .wx-table td { padding: 1rem; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--muted); line-height: 1.55; }
+    .wx-table tbody tr:last-child td { border-bottom: none; }
+    .wx-table .ev { color: var(--text); font-weight: 600; white-space: nowrap; }
+    .wx-table .strat-name { color: var(--accent); font-weight: 600; display: block; margin-bottom: 0.2rem; }
+    .wx-table ul { margin: 0.4rem 0 0; padding-left: 1.1rem; }
+    .wx-table ul li { margin-bottom: 0.25rem; }
+    .wx-table .thumb { width: 280px; max-width: 100%; border: 1px solid var(--border); border-radius: 6px; background: #fff; padding: 0.45rem; }
+    .wx-table td:last-child { width: 300px; }
+    .pill {
+      display: inline-block; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase;
+      font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 3px;
+      background: var(--accent-dim); color: var(--accent); margin-bottom: 0.45rem;
+    }
+    .pill.pick { background: var(--purple-dim); color: var(--purple); }
+    .pill.all { background: rgba(8,21,50,0.06); color: var(--text); }
+    .pill.na { background: rgba(200,60,60,0.1); color: #b23a3a; }
+
+    /* ── LEGEND TABLE ── */
+    .legend-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; font-size: 0.92rem; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .legend-table th { background: var(--surface2); text-align: left; padding: 0.85rem 1.25rem; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text); font-weight: 700; }
+    .legend-table td { padding: 0.8rem 1.25rem; border-top: 1px solid var(--border); color: var(--muted); }
+    .legend-table td:first-child { color: var(--text); font-weight: 600; }
+
+    /* ── WORKFLOW STRIP ── */
+    .workflow {
+      background: var(--surface2); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.5rem 1.75rem; margin: 1.75rem 0;
+      font-family: 'Lora', serif; font-size: clamp(1rem, 2vw, 1.2rem); color: var(--text);
+      text-align: center; line-height: 1.6;
+    }
+    .workflow .arrow { color: var(--accent); font-weight: 700; padding: 0 0.4rem; }
+
+    /* ── PULL CALLOUT ── */
+    .pull { background: var(--text); color: #ffffff; border-radius: 12px; padding: 2.5rem 3rem; margin-top: 2rem; position: relative; overflow: hidden; }
+    .pull::after {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(320px 260px at 88% 12%, rgba(13,155,150,0.35), transparent 60%), linear-gradient(160deg, rgba(69,12,157,0.35), transparent 55%);
+      pointer-events: none;
+    }
+    .pull p {
+      position: relative; z-index: 2; font-family: 'Lora', serif;
+      font-size: clamp(1.1rem, 2.2vw, 1.4rem); font-weight: 400; line-height: 1.45; color: #ffffff; max-width: 56ch; margin: 0;
+    }
+
+    /* ── AUTHOR ── */
+    .author { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.75rem; border-left: 4px solid var(--accent); }
+    .author .a-k { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 0.5rem; }
+    .author-row { display: flex; align-items: center; gap: 1rem; }
+    .author-photo { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+    .author h3 { font-size: 1.15rem; margin-bottom: 0.3rem; }
+    .author .role { color: var(--muted); font-size: 0.85rem; margin-bottom: 0; }
+
+    /* ── CLOSING CTA ── */
+    .closing-cta {
+      background: linear-gradient(135deg, rgba(69,12,157,0.06) 0%, rgba(13,155,150,0.08) 100%);
+      border: 1px solid rgba(69,12,157,0.12); border-radius: 8px; padding: 2.5rem;
+      display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center; margin: 3rem 0;
+    }
+    .closing-cta h2 { font-family: 'Lora', serif; font-size: 1.3rem; font-weight: 400; color: var(--text); line-height: 1.3; letter-spacing: -0.02em; margin-bottom: 0.4rem; }
+    .closing-cta p { font-size: 0.85rem; color: var(--muted); max-width: none; margin: 0; }
+    .btn-primary { display: inline-block; background: var(--accent); color: #ffffff; padding: 0.75rem 1.75rem; border-radius: 4px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: opacity 0.2s; }
+    .btn-primary:hover { opacity: 0.85; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--surface); border-top: 1px solid var(--border); padding: 2.5rem 4rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+    .footer-logo { display: flex; align-items: center; gap: 0.65rem; }
+    .footer-logo-text { font-family: 'Lora', serif; font-size: 1rem; font-weight: 700; color: var(--text); }
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.8rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy { color: var(--muted); font-size: 0.75rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-toggle { display: flex; }
+      .nav-links {
+        position: fixed; top: 0; right: 0; height: 100vh; width: 280px;
+        flex-direction: column; background: var(--surface); padding: 5rem 2rem 2rem; gap: 1.5rem;
+        transform: translateX(100%); transition: transform 0.3s; box-shadow: -4px 0 20px rgba(0,0,0,0.1); z-index: 105;
+      }
+      .nav-links.open { transform: translateX(0); }
+      .page-header { padding: 6rem 1.5rem 2.5rem; }
+      .docket-callout { width: 100%; }
+      .docket-callout .dc-divider { display: none; }
+      .tagstrip { padding: 1rem 1.5rem; }
+      .content-wrap { padding: 0 1.5rem; }
+      .defgrid { grid-template-columns: 1fr; }
+      .fig-grid { grid-template-columns: 1fr; }
+      .pull { padding: 2rem 1.5rem; }
+      .closing-cta { grid-template-columns: 1fr; text-align: center; padding: 2rem 1.5rem; }
+      .closing-cta .btn-primary { justify-self: center; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 1.5rem; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="blackcatlogo_no_bg.png" alt="BlackCat Bio" style="height: 28px;">
+    <span class="nav-logo-text">BlackCat Bio</span>
+  </a>
+  <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="index.html#how">Platform</a></li>
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="case-studies.html">Case Studies</a></li>
+    <li><a href="blog.html">Research</a></li>
+    <li><a href="index.html#team">Team</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="contact.html" class="nav-cta">Pilot on your program</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-grid"></div>
+  <div class="page-header-inner">
+    <a href="blog.html" class="back-link">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Blog
+    </a>
+    <p class="page-eyebrow">BlackCat Bio · Estimands · ICH E9(R1)</p>
+    <h1>A plain-language rewrite of <em>ICH E9(R1)</em></h1>
+    <p class="lede">Defining the effect you actually want to measure. The same ideas as the guideline on
+      estimands and intercurrent events, in everyday language, with worked examples and a figure for
+      every strategy.</p>
+
+    <div class="docket-callout">
+      <div class="dc-meta">
+        <span class="dc-k">Guideline</span>
+        <span class="dc-v">ICH E9(R1) · Estimands &amp; Sensitivity Analysis</span>
+      </div>
+      <div class="dc-divider"></div>
+      <a class="docket-btn" href="https://www.ema.europa.eu/en/documents/scientific-guideline/ich-e9-r1-addendum-estimands-and-sensitivity-analysis-clinical-trials-guideline-statistical-principles-clinical-trials-step-5_en.pdf" target="_blank" rel="noopener">
+        Download original PDF
+        <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- TAGSTRIP -->
+<div class="tagstrip">
+  <div class="tagstrip-inner">
+    <span>Target Effects (Estimands)</span>
+    <span>Intercurrent Events</span>
+    <span>Strategies &amp; Figures</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- 1. CORE PROBLEM -->
+  <div class="article-section">
+    <div class="section-tag">01 — The core problem</div>
+    <h2>Pin down the question before you analyze anything</h2>
+    <p>A trial exists to answer a question: <em>what does this treatment do?</em> But that is vaguer than
+      it sounds. Before you analyze anything, you have to pin down exactly which effect, in which people,
+      on which outcome, accounting for which real-world complications, summarized in which way. Skip this,
+      and two statisticians can analyze the same dataset and report different "treatment effects," each
+      correct for a different unstated question.</p>
+    <p>The fix is to write down the effect you intend to estimate <strong>before the trial</strong> —
+      precisely enough that the analysis method follows from it, not the other way around. Call this
+      precisely defined effect the <strong>Target Effect</strong>.</p>
+  </div>
+
+  <!-- 2. FIVE PARTS -->
+  <div class="article-section">
+    <div class="section-tag">02 — Anatomy</div>
+    <h2>The five parts of a Target Effect</h2>
+    <p>A Target Effect is fully specified only when all five of these are nailed down. Change any one of
+      the five and you have changed the question.</p>
+    <ol class="parts">
+      <li><strong>Treatments:</strong> which treatment(s) and comparator(s), and the regimens around them.</li>
+      <li><strong>People:</strong> the patient population the question is about.</li>
+      <li><strong>Outcome:</strong> the specific measurement that captures the clinical question (the endpoint).</li>
+      <li><strong>Disruption handling:</strong> how you account for events that occur after treatment starts
+        and muddy the outcome (see §4). The most neglected part, and the heart of this document.</li>
+      <li><strong>Group summary:</strong> how individual outcomes are combined into one number comparing
+        treatments (difference in means, odds ratio, hazard ratio, etc.).</li>
+    </ol>
+  </div>
+
+  <!-- 3. DISRUPTIONS VS MISSING -->
+  <div class="article-section">
+    <div class="section-tag">03 — A key distinction</div>
+    <h2>Disruptions vs. simply-missing data</h2>
+    <p>A <strong>Disruption</strong> is an event that happens after treatment starts and either changes the
+      meaning of the outcome or makes it hard to interpret — starting a rescue medication, stopping the
+      study drug, switching arms, or dying before the outcome is assessed. A Disruption is <em>not</em> the
+      same as missing data, and conflating the two is the most common error here.</p>
+    <div class="defgrid">
+      <div class="def">
+        <div class="d-k">Disruption · Intercurrent Event (ICE)</div>
+        <h4>A question-definition problem</h4>
+        <p>Something happened to the treatment or to the meaning of the outcome. The outcome you want is
+          still conceptually defined — the only question is how the effect should treat the event.</p>
+      </div>
+      <div class="def">
+        <div class="d-k">Missing data</div>
+        <h4>An estimation problem</h4>
+        <p>The plain absence of a value you wanted, where that value stays perfectly well defined — e.g., a
+          patient moves away. Nothing about the question changed; you just do not have the number. Handled
+          with imputation and similar tools.</p>
+      </div>
+    </div>
+    <p style="margin-top:1.75rem;">The two stack: a Disruption can later <em>produce</em> missing data. Handle them as separate
+      steps — first decide how the Target Effect treats the Disruption, then deal with any data that ends up
+      missing.</p>
+  </div>
+
+  <!-- 4. FIVE STRATEGIES -->
+  <div class="article-section">
+    <div class="section-tag">04 — The toolkit</div>
+    <h2>The five ways to handle a Disruption</h2>
+    <p>Each strategy is a different answer to "given that this event can happen, what effect do we actually
+      want?" None is universally right; the clinical question decides. The pictures below are the
+      <strong>archetypes</strong> — reusable across different events, because the picture goes with the
+      strategy, not the event.</p>
+
+    <div class="strategy-block">
+      <h3>(a) Count Regardless <span class="aka">— aka Treatment Policy</span></h3>
+      <p>Use the outcome value no matter what — whether or not the Disruption happened. The event is treated
+        as part of real life and ignored in defining the effect. Answers the pragmatic question: what happens
+        when you start this treatment, knowing some patients will stop, switch, or supplement? Note that this
+        strategy requires that you actually collect the outcome after the Disruption; it cannot be used when
+        the Disruption makes the outcome impossible to obtain (e.g., death, for a non-survival outcome).</p>
+      <figure>
+        <img src="images/e9r1/archetype-count-regardless.png" alt="Count Regardless archetype: the outcome line runs through the event untouched.">
+        <figcaption>Archetype: used as observed. The line runs through the event untouched.</figcaption>
+      </figure>
+    </div>
+
+    <div class="strategy-block">
+      <h3>(b) Bake-In <span class="aka">— aka Composite Variable</span></h3>
+      <p>Make the Disruption part of the outcome itself. Rather than measuring the clinical value alone, you
+        define a combined endpoint in which experiencing the event counts as a result — usually a failure.
+        You are not estimating what the value would have been; you are declaring that the event itself is an
+        outcome. The high value is a definition, not an estimate — which is why the archetype is a clean,
+        hard arrow to a fixed value.</p>
+      <figure>
+        <img src="images/e9r1/archetype-bake-in.png" alt="Bake-In archetype: the value is assigned to worst by fiat.">
+        <figcaption>Archetype: definitional floor. The value is assigned to "worst" by fiat.</figcaption>
+      </figure>
+    </div>
+
+    <div class="strategy-block">
+      <h3>(c) What-If <span class="aka">— aka Hypothetical</span></h3>
+      <p>Target the value the outcome <em>would</em> have taken in an imagined world where the Disruption
+        never occurred. You specify the hypothetical condition (e.g., "rescue had not been available"), then
+        estimate what would have happened. Unlike Bake-In, you are not scoring the event — you are
+        reconstructing a counterfactual value, which carries uncertainty. A single deterministic
+        reconstruction looks like the first picture; multiple imputation looks like the second — the scatter
+        of draws is the visual signature of "estimated, not declared."</p>
+      <div class="fig-grid">
+        <figure>
+          <img src="images/e9r1/archetype-whatif-single.png" alt="What-If archetype, single imputed path.">
+          <figcaption>Single imputed path. Observed tail discarded, one counterfactual drawn.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/e9r1/archetype-whatif-mi.png" alt="What-If archetype, multiple imputation fan of draws.">
+          <figcaption>Multiple imputation. A fan of draws (uncertainty) with a pooled estimate.</figcaption>
+        </figure>
+      </div>
+      <figcaption class="note" style="margin-top:0.75rem;">Caveats: the deterministic reconstruction is a
+        model-based conditional-mean estimate had rescue not been available — not a carry-forward
+        (LOCF/BOCF/WOCF). And for reference-based imputation, the spread of draws depicts between-imputation
+        variability as intuition only; under jump-to-reference the pooled variance can be artificially narrow,
+        so do not read quantitative uncertainty off the picture.</figcaption>
+    </div>
+
+    <div class="strategy-block">
+      <h3>(d) Until-Disruption <span class="aka">— aka While On Treatment</span></h3>
+      <p>Define the outcome only over the period <em>before</em> the Disruption. The question is the effect
+        while the patient is actually on treatment, accepting that different patients contribute different
+        lengths of time. You do not recover or imagine the post-event period — it is simply outside the
+        question that the estimand is answering. Natural for cumulative or longitudinal outcomes, not for a
+        single fixed-timepoint snapshot.</p>
+      <figure>
+        <img src="images/e9r1/archetype-until-disruption.png" alt="Until-Disruption archetype: the endpoint window ends at the event.">
+        <figcaption>Archetype: truncation. The endpoint window ends at the event; the rest is out of scope.</figcaption>
+      </figure>
+    </div>
+
+    <div class="strategy-block">
+      <h3>(e) Same-Type Subgroup <span class="aka">— aka Principal Stratum</span></h3>
+      <p>Narrow the question to a specific <em>type</em> of patient: those who would (or would not)
+        experience the Disruption regardless of which treatment they were assigned. Because that membership
+        is a fixed trait independent of the assignment actually received, comparing treatments within that
+        type is a fair, like-with-like comparison — unlike naively subsetting to whoever actually avoided the
+        event, which breaks randomization. The catch: membership is latent (each patient is assigned once),
+        so identification rests on assumptions plus sensitivity analysis. This is the one strategy that is
+        not about a trajectory over time — so its picture deliberately breaks format.</p>
+      <figure>
+        <img src="images/e9r1/archetype-same-type-subgroup.jpeg" alt="Same-Type Subgroup archetype: carve out the latent type and compare only inside it.">
+        <figcaption>Archetype: stratum subgroup. Carve out the latent type; compare only inside it.</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <!-- 5. WORKED EXAMPLES -->
+  <div class="article-section">
+    <div class="section-tag">05 — Worked examples</div>
+    <h2>Same event, different strategy</h2>
+    <p>The same Disruption appears under several strategies — only the strategy choice changes. The
+      implementation tag means: <strong>SINGLE</strong> = one procedure; <strong>PICK ONE</strong> = true
+      alternatives; <strong>ALL STEPS</strong> = a sequence run in order. (Study withdrawal is deliberately
+      absent — it is missing data, not a Disruption.)</p>
+    <div class="table-scroll">
+      <table class="wx-table">
+        <thead>
+          <tr><th>Disruption</th><th>Strategy &amp; why</th><th>How it is implemented</th><th>Figure</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="ev">Rescue medication</td>
+            <td><span class="strat-name">Count Regardless</span>Real-world effect of starting the drug; rescue is part of the lived regimen.</td>
+            <td><span class="pill">Single</span><br>Follow on schedule; use the post-rescue value as observed.</td>
+            <td><img class="thumb" src="images/e9r1/rescue-count-regardless.png" alt="Rescue, Count Regardless figure"></td>
+          </tr>
+          <tr>
+            <td class="ev">Rescue medication</td>
+            <td><span class="strat-name">Bake-In</span>Needing rescue is itself failure, so it goes inside the endpoint.</td>
+            <td><span class="pill pick">Pick one — by endpoint type</span>
+              <ul><li><strong>Continuous:</strong> assign worst observed change at first rescue (rank-based).</li>
+              <li><strong>Binary:</strong> responder = met threshold AND no rescue.</li></ul></td>
+            <td><img class="thumb" src="images/e9r1/rescue-bake-in.jpeg" alt="Rescue, Bake-In figure"></td>
+          </tr>
+          <tr>
+            <td class="ev">Rescue medication</td>
+            <td><span class="strat-name">What-If</span>Effect in a world where rescue was not available.</td>
+            <td><span class="pill all">All steps</span>
+              <ul><li>Censor from first rescue onward.</li>
+              <li>Impute counterfactual (MAR vs. reference-based).</li>
+              <li>Analyze the reconstructed no-rescue outcome.</li></ul></td>
+            <td><img class="thumb" src="images/e9r1/rescue-whatif.png" alt="Rescue, What-If figure"></td>
+          </tr>
+          <tr>
+            <td class="ev">Rescue medication</td>
+            <td><span class="strat-name">Until-Disruption</span>Only the response over the window before rescue matters.</td>
+            <td><span class="pill pick">Pick one — by endpoint shape</span>
+              <ul><li><strong>Snapshot:</strong> symptom change from baseline at first rescue.</li>
+              <li><strong>Cumulative:</strong> on-treatment average/AUC truncated at rescue.</li></ul></td>
+            <td><img class="thumb" src="images/e9r1/rescue-until-disruption.png" alt="Rescue, Until-Disruption figure"></td>
+          </tr>
+          <tr>
+            <td class="ev">Discontinuation (AE)</td>
+            <td><span class="strat-name">Count Regardless</span>Effect of the regimen, accepting some stop for tolerability.</td>
+            <td><span class="pill">Single</span><br>Continue assessments after the drug stops; use final outcomes as observed.</td>
+            <td><img class="thumb" src="images/e9r1/discont-count-regardless.png" alt="Discontinuation, Count Regardless figure"></td>
+          </tr>
+          <tr>
+            <td class="ev">Discontinuation (AE)</td>
+            <td><span class="strat-name">What-If</span>Effect had the patient been able to stay on drug.</td>
+            <td><span class="pill all">All steps</span>
+              <ul><li>Censor at discontinuation.</li>
+              <li>Impute an on-treatment-consistent trajectory under MAR.</li>
+              <li>Analyze.</li></ul></td>
+            <td><img class="thumb" src="images/e9r1/discont-whatif.png" alt="Discontinuation, What-If figure"></td>
+          </tr>
+          <tr>
+            <td class="ev">Discontinuation (AE)</td>
+            <td><span class="strat-name">Until-Disruption</span>Benefit only while patients tolerate and stay on drug.</td>
+            <td><span class="pill pick">Pick one — by endpoint shape</span>
+              <ul><li><strong>Snapshot:</strong> endpoint at time of discontinuation.</li>
+              <li><strong>Cumulative:</strong> summarize over the on-treatment window.</li></ul></td>
+            <td><img class="thumb" src="images/e9r1/discont-until-disruption.png" alt="Discontinuation, Until-Disruption figure"></td>
+          </tr>
+          <tr>
+            <td class="ev">Death before assessment</td>
+            <td><span class="strat-name">Bake-In</span>Death is the worst result; bake it into the endpoint.</td>
+            <td><span class="pill pick">Pick one — by endpoint type</span>
+              <ul><li><strong>Continuous:</strong> rank values, place deaths below worst observed.</li>
+              <li><strong>Categorical:</strong> composite where death = failure.</li></ul></td>
+            <td><img class="thumb" src="images/e9r1/death-bake-in.png" alt="Death, Bake-In figure"></td>
+          </tr>
+          <tr>
+            <td class="ev">Death before assessment</td>
+            <td><span class="strat-name">Same-Type Subgroup</span>Effect among patients who would survive under either arm — the only group for whom the outcome is defined.</td>
+            <td><span class="pill all">All steps</span>
+              <ul><li>Define the latent survivor stratum.</li>
+              <li>Adopt an identifying assumption (monotonicity vs. principal-score).</li>
+              <li>Estimate the within-stratum effect.</li>
+              <li>Sensitivity: analyze the untestable assumption.</li></ul></td>
+            <td><img class="thumb" src="images/e9r1/death-same-type-subgroup.png" alt="Death, Same-Type Subgroup figure"></td>
+          </tr>
+          <tr>
+            <td class="ev">Death before assessment</td>
+            <td><span class="strat-name">Until-Disruption</span>Symptom benefit during the time alive and on drug.</td>
+            <td><span class="pill">Single</span><br>Define the endpoint over the period before death (e.g., mean score while alive).</td>
+            <td><img class="thumb" src="images/e9r1/death-until-disruption.png" alt="Death, Until-Disruption figure"></td>
+          </tr>
+          <tr>
+            <td class="ev">Death before assessment</td>
+            <td><span class="strat-name">Count Regardless — Not Applicable</span></td>
+            <td><span class="pill na">N/A</span><br>No value exists after death, so this strategy cannot actually be used here.</td>
+            <td><img class="thumb" src="images/e9r1/death-count-regardless-na.png" alt="Death, Count Regardless not applicable figure"></td>
+          </tr>
+          <tr>
+            <td class="ev">Switch to other drug</td>
+            <td><span class="strat-name">Count Regardless</span>Real-world effect of the initial assignment, switching included.</td>
+            <td><span class="pill">Single</span><br>Keep ITT; use final outcomes regardless of switch.</td>
+            <td><img class="thumb" src="images/e9r1/switch-count-regardless.png" alt="Switch, Count Regardless figure"></td>
+          </tr>
+          <tr>
+            <td class="ev">Switch to other drug</td>
+            <td><span class="strat-name">What-If</span>Effect had switching not been possible.</td>
+            <td><span class="pill all">All steps</span>
+              <ul><li>Censor at switch.</li>
+              <li>Reconstruct the no-switch outcome (RPSFTM vs. IPCW).</li>
+              <li>Analyze.</li></ul></td>
+            <td><img class="thumb" src="images/e9r1/switch-whatif.jpeg" alt="Switch, What-If figure"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 6. WORKFLOW -->
+  <div class="article-section">
+    <div class="section-tag">06 — Putting it in order</div>
+    <h2>The workflow</h2>
+    <p>The pieces are planned in order, before data arrive:</p>
+    <div class="workflow">
+      Trial objective <span class="arrow">→</span> Target Effect (all five parts)
+      <span class="arrow">→</span> estimation method <span class="arrow">→</span> pre-specified Stress Tests
+    </div>
+    <p>Perform Stress Tests and Side Analyses in addition to the primary analysis. A <strong>Stress
+      Test</strong> keeps the same Target Effect and asks whether the conclusion holds if the untestable
+      assumptions are wrong in plausible ways. A <strong>Side Analysis</strong> is broader or exploratory —
+      often a different Target Effect — and is not a robustness check. All of it belongs in the protocol and
+      SAP up front.</p>
+  </div>
+
+  <!-- 7. FIGURES BY EVENT -->
+  <div class="article-section">
+    <div class="section-tag">07 — Figures by event</div>
+    <h2>Same archetype, rendered for each event</h2>
+    <p>The table above uses one archetype picture per strategy. Here are the same pictures rendered for each
+      specific event — note how the archetype stays constant while the event label and a few event-specific
+      details change. That constancy is the point: the picture goes with the strategy, not the event.</p>
+
+    <div class="event-group">
+      <h3>Rescue medication</h3>
+      <div class="fig-grid">
+        <figure>
+          <img src="images/e9r1/rescue-count-regardless.png" alt="Rescue, Count Regardless">
+          <figcaption>Count Regardless — the line runs through rescue untouched.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/e9r1/rescue-bake-in.jpeg" alt="Rescue, Bake-In">
+          <figcaption>Bake-In — value assigned worst at rescue; the real later outcome is collected but not used.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/e9r1/rescue-whatif.png" alt="Rescue, What-If">
+          <figcaption>What-If — observed tail discarded; imputed toward a worse no-rescue world (fan = MI).</figcaption>
+        </figure>
+        <figure>
+          <img src="images/e9r1/rescue-until-disruption.png" alt="Rescue, Until-Disruption">
+          <figcaption>Until-Disruption — endpoint defined only up to rescue.</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="event-group">
+      <h3>Treatment discontinuation (AE)</h3>
+      <div class="fig-grid">
+        <figure>
+          <img src="images/e9r1/discont-count-regardless.png" alt="Discontinuation, Count Regardless">
+          <figcaption>Count Regardless — follow off-drug, use values as observed.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/e9r1/discont-whatif.png" alt="Discontinuation, What-If">
+          <figcaption>What-If — imputed as if the patient had stayed on drug; observed drift discarded.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/e9r1/discont-until-disruption.png" alt="Discontinuation, Until-Disruption">
+          <figcaption>Until-Disruption — endpoint defined only while on drug.</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="event-group">
+      <h3>Death before assessment</h3>
+      <div class="fig-grid">
+        <figure>
+          <img src="images/e9r1/death-bake-in.png" alt="Death, Bake-In">
+          <figcaption>Bake-In — ranked below all observed; no tail, because no outcome exists after death.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/e9r1/death-same-type-subgroup.png" alt="Death, Same-Type Subgroup">
+          <figcaption>Same-Type Subgroup — the template-breaker: compare only within the survive-under-either stratum.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/e9r1/death-until-disruption.png" alt="Death, Until-Disruption">
+          <figcaption>Until-Disruption — symptom score while alive on treatment; the rest is out of scope.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/e9r1/death-count-regardless-na.png" alt="Death, Count Regardless not applicable">
+          <figcaption>Count Regardless — not usable: no value exists after death to use as observed.</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="event-group">
+      <h3>Switch to other drug</h3>
+      <div class="fig-grid">
+        <figure>
+          <img src="images/e9r1/switch-count-regardless.png" alt="Switch, Count Regardless">
+          <figcaption>Count Regardless — keep ITT; use final outcomes regardless of switch.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/e9r1/switch-whatif.jpeg" alt="Switch, What-If">
+          <figcaption>What-If — imputed along the no-switch path; observed post-switch values discarded.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="article-section">
+    <div class="section-tag">Legend</div>
+    <h2>New term → ICH E9(R1) term</h2>
+    <p>The plain-language names used throughout this document map directly onto the official guideline
+      vocabulary.</p>
+    <table class="legend-table">
+      <thead><tr><th>This document</th><th>ICH E9(R1)</th></tr></thead>
+      <tbody>
+        <tr><td>Target Effect</td><td>Estimand</td></tr>
+        <tr><td>Disruption</td><td>Intercurrent event</td></tr>
+        <tr><td>Group summary</td><td>Population-level summary</td></tr>
+        <tr><td>Count Regardless</td><td>Treatment policy strategy</td></tr>
+        <tr><td>Bake-In</td><td>Composite variable strategy</td></tr>
+        <tr><td>What-If</td><td>Hypothetical strategy</td></tr>
+        <tr><td>Same-Type Subgroup</td><td>Principal stratum strategy</td></tr>
+        <tr><td>Until-Disruption</td><td>While on treatment strategy</td></tr>
+        <tr><td>Stress Test</td><td>Sensitivity analysis</td></tr>
+        <tr><td>Side Analysis</td><td>Supplementary analysis</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- APPENDIX -->
+  <div class="article-section">
+    <div class="section-tag">Appendix</div>
+    <h2>Anatomy of a real estimand</h2>
+    <p>An example definition of an estimand, with comments and critiques — what to keep, what to reword, and
+      the critical errors to avoid.</p>
+    <figure>
+      <img src="images/e9r1/anatomy-estimand.png" alt="Anatomy of a real estimand: an annotated primary estimand with critiques, rewords, and alternatives not chosen.">
+      <figcaption>Anatomy of a real estimand — annotated, with critical errors, rewords, and alternatives not chosen.</figcaption>
+    </figure>
+  </div>
+
+  <!-- AUTHOR -->
+  <div class="article-section" style="padding: 2rem 0;">
+    <div class="author">
+      <div class="a-k">Written by</div>
+      <div class="author-row">
+        <img class="author-photo" src="images/barbara_headshot.jpg" alt="Barbara Elashoff">
+        <div>
+          <h3>Barbara Elashoff, MS</h3>
+          <p class="role">CEO &amp; Co-founder, BlackCat Bio · Former FDA statistical reviewer</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="blackcatlogo_no_bg.png" alt="BlackCat Bio" style="height: 28px;">
+    <span class="footer-logo-text">BlackCat Bio</span>
+  </div>
+  <ul class="footer-links">
+    <li><a href="index.html#how">Platform</a></li>
+    <li><a href="blog.html">Research</a></li>
+    <li><a href="index.html#team">Team</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 BlackCat Bio, Inc.</div>
+</footer>
+
+<script>
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('active');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      navToggle.classList.remove('active');
+    });
+  });
+</script>
+
+</body>
+</html>
