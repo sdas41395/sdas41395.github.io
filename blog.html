@@ -27,7 +27,7 @@
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     img { max-width: 100%; height: auto; }
-    html { scroll-behavior: smooth; overflow-x: hidden; }
+    html { scroll-behavior: auto; overflow-x: hidden; }
 
     body {
       background: var(--bg);
@@ -60,7 +60,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 1.25rem 4rem;
-      background: rgba(244, 244, 244, 0.88);
+      background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(18px);
       border-bottom: 1px solid var(--border);
     }
@@ -327,8 +327,11 @@
 <!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo">
-    <img src="blackcatlogo_no_bg.png" alt="BlackCat Bio" style="height: 28px;">
-    <span class="nav-logo-text">BlackCat Bio</span>
+    <img src="cat-mark.png" alt="" style="height: 42px; width: auto;">
+    <span style="display:flex; flex-direction:column; line-height:1.02;">
+      <span style="font-family:'Lora',serif; font-weight:700; font-size:1.3rem; color:#081532; letter-spacing:-0.01em;">BlackCat Bio</span>
+      <span style="font-family:'Lora',serif; font-weight:500; font-size:0.72rem; color:#6c6c6c; letter-spacing:0.02em; margin-top:3px;">The SAP Specialists</span>
+    </span>
   </a>
   <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
   <ul class="nav-links">
@@ -358,7 +361,7 @@
     <a href="e9r1-estimands.html" class="blog-card">
       <div class="blog-card-type purple">Explainer · Estimands · ICH E9(R1)</div>
       <div class="blog-card-title">A plain-language rewrite of ICH E9(R1)</div>
-      <div class="blog-card-desc">Defining the effect you actually want to measure. Estimands, intercurrent events, and the five strategies for handling them &mdash; in everyday language, with worked examples and a figure for every strategy.</div>
+      <div class="blog-card-desc">Defining the effect you actually want to measure. Estimands, intercurrent events, and the five strategies for handling them in everyday language, with worked examples and a figure for every strategy.</div>
       <div class="blog-card-arrow">Read article <span>&rarr;</span></div>
     </a>
 
@@ -383,7 +386,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo"><img src="blackcatlogo_no_bg.png" alt="BlackCat Bio" style="height: 24px;"><span class="footer-logo-text">BlackCat Bio</span></div>
+  <div class="footer-logo"><img src="cat-mark.png" alt="" style="height: 32px; width: auto;"><span style="display:flex; flex-direction:column; line-height:1.02;"><span style="font-family:'Lora',serif; font-weight:700; font-size:1.05rem; color:#081532; letter-spacing:-0.01em;">BlackCat Bio</span><span style="font-family:'Lora',serif; font-weight:500; font-size:0.62rem; color:#6c6c6c; margin-top:2px;">The SAP Specialists</span></span></div>
   <ul class="footer-links">
     <li><a href="index.html#how">Platform</a></li>
     <li><a href="index.html#features">Features</a></li>
