@@ -129,6 +129,15 @@
 
     .nav-cta:hover { opacity: 0.85; color: #ffffff !important; }
 
+    .nav-cta.disabled,
+    .nav-cta.disabled:hover {
+      background: #c5c8ce;
+      color: #6b7280 !important;
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 1;
+    }
+
     /* ── HERO ── */
     .hero {
       position: relative;
@@ -338,6 +347,16 @@
     }
 
     .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .btn-primary.disabled,
+    .btn-primary.disabled:hover {
+      background: #c5c8ce;
+      color: #6b7280;
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 1;
+      transform: none;
+    }
 
     .btn-ghost {
       background: transparent;
@@ -720,13 +739,18 @@
       transition: background 0.25s;
     }
 
-    .feature:hover { background: var(--surface2); }
+    .feature.teal:hover {
+      background: #f7fbfb;
+    }
+
+    .feature.purple:hover {
+      background: #f8f5fc;
+    }
 
     .feature-icon {
       width: 36px;
       height: 36px;
       border-radius: 6px;
-      background: var(--accent-dim);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -736,23 +760,26 @@
     .feature-icon svg {
       width: 16px;
       height: 16px;
-      stroke: var(--accent);
       fill: none;
       stroke-width: 1.8;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
 
-    .feature:nth-child(even) .feature-icon {
+    .feature.teal .feature-icon {
+      background: var(--accent-dim);
+    }
+
+    .feature.teal .feature-icon svg {
+      stroke: var(--accent);
+    }
+
+    .feature.purple .feature-icon {
       background: var(--purple-dim);
     }
 
-    .feature:nth-child(even) .feature-icon svg {
-      stroke: #8b5cf6;
-    }
-
-    .feature:nth-child(even) .feature-title {
-      color: var(--white);
+    .feature.purple .feature-icon svg {
+      stroke: var(--purple);
     }
 
     .feature-title {
@@ -1321,57 +1348,6 @@
       max-width: 60ch;
     }
 
-    .offers-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-    }
-
-    .offer-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 2rem;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.25s;
-    }
-
-    .offer-card:hover {
-      border-color: rgba(13,155,150,0.3);
-    }
-
-    .offer-card.purple:hover {
-      border-color: rgba(69,12,157,0.25);
-    }
-
-    .offer-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--accent);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.3s ease;
-    }
-
-    .offer-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .offer-card.purple::before {
-      background: var(--purple);
-    }
-
-    .offer-card.teal .offer-title {
-      color: var(--accent);
-    }
-
-    .offer-card.purple .offer-title {
-      color: var(--purple);
-    }
-
     .offer-group {
       display: flex;
       flex-direction: column;
@@ -1383,12 +1359,8 @@
       border-top: 1px solid rgba(13,155,150,0.15);
     }
 
-    .offer-group .offers-grid {
-      margin-bottom: 1.5rem;
-    }
-
     .offer-group-head {
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
     }
 
     .offer-group-tag {
@@ -1425,6 +1397,168 @@
       max-width: 46ch;
     }
 
+    .offer-showcase {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      gap: 1.75rem;
+      align-items: stretch;
+      margin-bottom: 1.5rem;
+    }
+
+    .offer-showcase.preview-left {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    }
+
+    .offer-showcase.preview-left .offer-preview {
+      order: -1;
+    }
+
+    .offers-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      min-width: 0;
+    }
+
+    .offer-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.35rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.25s, background 0.25s, box-shadow 0.25s, transform 0.25s;
+    }
+
+    .offer-card:hover,
+    .offer-card.is-active {
+      border-color: rgba(13,155,150,0.35);
+      background: #f7fbfb;
+      box-shadow: 0 8px 24px rgba(13,155,150,0.08);
+      transform: translateX(4px);
+    }
+
+    .offer-card.purple:hover,
+    .offer-card.purple.is-active {
+      border-color: rgba(69,12,157,0.3);
+      background: #f8f5fc;
+      box-shadow: 0 8px 24px rgba(69,12,157,0.08);
+    }
+
+    .offer-showcase.preview-left .offer-card:hover,
+    .offer-showcase.preview-left .offer-card.is-active {
+      transform: translateX(-4px);
+    }
+
+    .offer-card::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0; left: 0;
+      width: 3px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.3s ease;
+    }
+
+    .offer-card:hover::before,
+    .offer-card.is-active::before {
+      transform: scaleY(1);
+    }
+
+    .offer-card.purple::before {
+      background: var(--purple);
+    }
+
+    .offer-showcase.preview-left .offer-card::before {
+      left: auto;
+      right: 0;
+    }
+
+    .offer-card.teal .offer-title {
+      color: var(--accent);
+    }
+
+    .offer-card.purple .offer-title {
+      color: var(--purple);
+    }
+
+    .offer-preview {
+      position: sticky;
+      top: 6.5rem;
+      align-self: start;
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(160deg, rgba(255,255,255,0.92) 0%, rgba(234,242,241,0.85) 100%);
+      box-shadow: 0 18px 40px rgba(8, 21, 50, 0.08);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .offer-group.purple-group .offer-preview {
+      background:
+        linear-gradient(160deg, rgba(255,255,255,0.94) 0%, rgba(244,240,250,0.9) 100%);
+    }
+
+    .offer-preview-chrome {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.72);
+      position: relative;
+      z-index: 2;
+    }
+
+    .offer-preview-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #d0d5dd;
+    }
+
+    .offer-preview-dot:nth-child(1) { background: #ff5f57; }
+    .offer-preview-dot:nth-child(2) { background: #febc2e; }
+    .offer-preview-dot:nth-child(3) { background: #28c840; }
+
+    .offer-preview-label {
+      margin-left: 0.5rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .offer-preview-stage {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      min-height: 280px;
+      overflow: hidden;
+    }
+
+    .offer-preview-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      opacity: 0;
+      transform: scale(1.02);
+      transition: opacity 0.35s ease, transform 0.45s ease;
+      pointer-events: none;
+    }
+
+    .offer-preview-img.is-active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
     .offer-cta {
       display: inline-flex;
       align-self: flex-start;
@@ -1459,19 +1593,31 @@
       box-shadow: 0 6px 18px rgba(69,12,157,0.15);
     }
 
+    .offer-cta.disabled,
+    .offer-cta.disabled:hover {
+      color: #6b7280;
+      background: #e8eaed;
+      border-color: #c5c8ce;
+      cursor: not-allowed;
+      pointer-events: none;
+      transform: none;
+      box-shadow: none;
+      gap: 0.4rem;
+    }
+
     .offer-title {
       font-family: 'Lora', serif;
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       font-weight: 700;
       color: var(--white);
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.45rem;
       letter-spacing: -0.01em;
     }
 
     .offer-desc {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--muted);
-      line-height: 1.7;
+      line-height: 1.65;
     }
 
     .offer-tag {
@@ -1486,6 +1632,337 @@
       border: 1px solid var(--border);
       padding: 0.3rem 0.75rem;
       border-radius: 3px;
+    }
+
+    /* ── PRICING ── */
+    .pricing {
+      padding: 5rem 0;
+      background: linear-gradient(135deg, rgba(69,12,157,0.04) 0%, rgba(13,155,150,0.06) 100%);
+      border-top: 1px solid rgba(13,155,150,0.15);
+      border-bottom: 1px solid rgba(13,155,150,0.15);
+    }
+
+    .pricing-header {
+      margin-bottom: 3rem;
+    }
+
+    .pricing-intro {
+      margin-top: 1rem;
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 60ch;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+
+    .price-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+
+    .price-card:hover {
+      border-color: rgba(13,155,150,0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(8,21,50,0.06);
+    }
+
+    .price-card.featured {
+      border-color: rgba(13,155,150,0.4);
+      box-shadow: 0 12px 30px rgba(13,155,150,0.1);
+    }
+
+    .price-card.featured::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--accent);
+    }
+
+    .price-card.consulting {
+      background:
+        linear-gradient(135deg, rgba(69,12,157,0.16) 0%, rgba(13,155,150,0.18) 100%),
+        var(--surface);
+      border-color: rgba(69,12,157,0.22);
+    }
+
+    .price-card.consulting::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 3px;
+      background: var(--purple);
+    }
+
+    .price-card.consulting:hover {
+      border-color: rgba(69,12,157,0.4);
+      box-shadow: 0 12px 30px rgba(69,12,157,0.1);
+    }
+
+    .price-card.consulting .price-features li::before {
+      background: var(--purple);
+    }
+
+    .price-features a {
+      color: var(--purple);
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .price-features a:hover {
+      opacity: 0.8;
+    }
+
+    .price-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #ffffff;
+      background: var(--accent);
+      padding: 0.25rem 0.6rem;
+      border-radius: 3px;
+    }
+
+    .price-name {
+      font-family: 'Lora', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+    }
+
+    .price-tagline {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      min-height: 2.6em;
+    }
+
+    .price-amount {
+      display: flex;
+      align-items: baseline;
+      gap: 0.35rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .price-amount.stacked {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+    }
+
+    .price-value {
+      font-family: 'Lora', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .price-period {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .price-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      flex-grow: 1;
+    }
+
+    .price-features li {
+      position: relative;
+      padding-left: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    .price-features li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.5em;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .price-cta {
+      display: inline-block;
+      text-align: center;
+      width: 100%;
+      padding: 0.85rem 1.5rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s, border-color 0.2s;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+    }
+
+    .price-cta:hover {
+      border-color: rgba(8,21,50,0.3);
+      transform: translateY(-1px);
+    }
+
+    .price-cta.primary {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+    }
+
+    .price-cta.primary:hover {
+      opacity: 0.88;
+    }
+
+    .price-cta.disabled,
+    .price-cta.disabled:hover {
+      background: #c5c8ce;
+      color: #6b7280;
+      border-color: #c5c8ce;
+      cursor: not-allowed;
+      pointer-events: none;
+      transform: none;
+      opacity: 1;
+    }
+
+    .pricing-banner {
+      margin-top: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2.5rem;
+      background: linear-gradient(135deg, rgba(69,12,157,0.07) 0%, rgba(13,155,150,0.05) 100%);
+      border: 1px solid rgba(69,12,157,0.22);
+      border-radius: 10px;
+      padding: 2rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pricing-banner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 3px;
+      background: var(--purple);
+    }
+
+    .pricing-banner-main {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .pricing-banner-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 0.6rem;
+    }
+
+    .pricing-banner-tag::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    .pricing-banner-name {
+      font-family: 'Lora', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.4rem;
+    }
+
+    .pricing-banner-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 68ch;
+    }
+
+    .pricing-banner-side {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-shrink: 0;
+    }
+
+    .pricing-banner-price {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      line-height: 1.2;
+    }
+
+    .pricing-banner-price .price-value {
+      font-family: 'Lora', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+    }
+
+    .pricing-banner-price .price-period {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .pricing-banner .price-cta {
+      width: auto;
+      white-space: nowrap;
+    }
+
+    .pricing-banner .price-cta.purple,
+    .price-cta.purple {
+      background: var(--purple);
+      color: #ffffff;
+      border-color: var(--purple);
+    }
+
+    .pricing-banner .price-cta.purple:hover,
+    .price-cta.purple:hover {
+      opacity: 0.88;
     }
 
     /* ── TRUST ── */
@@ -1660,8 +2137,40 @@
         grid-template-columns: 1fr;
       }
 
-      .offers-grid {
+      .offer-showcase,
+      .offer-showcase.preview-left {
         grid-template-columns: 1fr;
+      }
+
+      .offer-showcase.preview-left .offer-preview {
+        order: 0;
+      }
+
+      .offer-preview {
+        position: relative;
+        top: auto;
+      }
+
+      .offer-preview-stage {
+        min-height: 220px;
+      }
+
+      .offer-card:hover,
+      .offer-card.is-active,
+      .offer-showcase.preview-left .offer-card:hover,
+      .offer-showcase.preview-left .offer-card.is-active {
+        transform: none;
+      }
+
+      .pricing-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+      }
+
+      .pricing-banner-side {
+        width: 100%;
+        justify-content: space-between;
       }
 
       .trust-grid {
@@ -1988,11 +2497,12 @@
   <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
   <ul class="nav-links">
     <li><a href="#features">Platform</a></li>
+    <li><a href="#pricing">Pricing</a></li>
     <li><a href="case-studies.html">Case Studies</a></li>
-    <li><a href="blog.html">Research</a></li>
+    <li><a href="blog.html">Articles</a></li>
     <li><a href="team.html">Team</a></li>
     <li><a href="contact.html">Contact</a></li>
-    <li><a href="https://blackcatstat.ai" class="nav-cta" target="_blank" rel="noopener">Try free</a></li>
+    <li><span class="nav-cta disabled" aria-disabled="true">Coming Soon</span></li>
   </ul>
 </nav>
 
@@ -2012,7 +2522,7 @@
     </p>
 
     <div class="hero-actions">
-      <a href="https://blackcatstat.ai" class="btn-primary" target="_blank" rel="noopener">Try the knowledge base free</a>
+      <span class="btn-primary disabled" aria-disabled="true">Coming Soon</span>
       <a href="case-studies.html" class="btn-ghost">See case studies</a>
     </div>
 
@@ -2023,15 +2533,15 @@
       </div>
       <div class="hero-divider"></div>
       <div class="hero-stat">
-        <div class="hero-stat-num">500,000+</div>
-        <div class="hero-stat-label">Indexed documents</div>
-        <div class="hero-stat-sub">FDA guidance · CRLs · Statistical reviews · Clinical trial protocols</div>
-      </div>
-      <div class="hero-divider"></div>
-      <div class="hero-stat">
         <div class="hero-stat-num">7 days</div>
         <div class="hero-stat-label">Complete SAP delivered to FDA</div>
         <div class="hero-stat-sub">Delivered on a live Phase III program — and approved!</div>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">&gt;1000</div>
+        <div class="hero-stat-label">SAP Templates</div>
+        <div class="hero-stat-sub">Download an annotated SAP Template with instructions and FDA preferences.</div>
       </div>
     </div>
   </div>
@@ -2051,44 +2561,76 @@
         <div class="offer-group-tag">Ask &amp; verify</div>
         <div class="offer-group-line">Ground your program in precedent before you write a word.</div>
       </div>
-      <div class="offers-grid">
-        <div class="offer-card teal">
-          <div class="offer-title">FDA Precedent &amp; Landscape Research</div>
-          <div class="offer-desc">Search 500,000+ indexed FDA guidance documents, CRLs, and statistical reviews for your indication in seconds. See exactly which precedent supports — or challenges — your approach, every claim source-linked back to the original document.</div>
+      <div class="offer-showcase" data-offer-showcase>
+        <div class="offers-stack">
+          <div class="offer-card teal is-active" data-preview="ask-1" tabindex="0">
+            <div class="offer-title">FDA Precedent &amp; Landscape Research</div>
+            <div class="offer-desc">Search 500,000+ indexed FDA guidance documents, CRLs, and statistical reviews for your indication in seconds. See exactly which precedent supports — or challenges — your approach, every claim source-linked back to the original document.</div>
+          </div>
+          <div class="offer-card teal" data-preview="ask-2" tabindex="0">
+            <div class="offer-title">SAP Templates from Comparable Studies</div>
+            <div class="offer-desc">Start from a real SAP structure, not a blank page. Pull publicly available SAPs from studies matched to your indication, phase, and design as your baseline.</div>
+          </div>
+          <div class="offer-card teal" data-preview="ask-3" tabindex="0">
+            <div class="offer-title">Power Calculations from Precedent</div>
+            <div class="offer-desc">Run sample-size and power calculations grounded in the actual effect sizes and variability reported in comparable trials — a documented starting point, not a guess.</div>
+          </div>
         </div>
-        <div class="offer-card teal">
-          <div class="offer-title">SAP Templates from Comparable Studies</div>
-          <div class="offer-desc">Start from a real SAP structure, not a blank page. Pull publicly available SAPs from studies matched to your indication, phase, and design as your baseline.</div>
-        </div>
-        <div class="offer-card teal">
-          <div class="offer-title">Power Calculations from Precedent</div>
-          <div class="offer-desc">Run sample-size and power calculations grounded in the actual effect sizes and variability reported in comparable trials — a documented starting point, not a guess.</div>
+        <div class="offer-preview" aria-hidden="true">
+          <div class="offer-preview-chrome">
+            <span class="offer-preview-dot"></span>
+            <span class="offer-preview-dot"></span>
+            <span class="offer-preview-dot"></span>
+            <span class="offer-preview-label">Platform preview</span>
+          </div>
+          <div class="offer-preview-stage">
+            <img class="offer-preview-img is-active" data-preview="ask-1" src="precedent-preview-lesswide.png" alt="FDA Precedent &amp; Landscape Research platform preview">
+            <img class="offer-preview-img" data-preview="ask-2" src="sap-template.png" alt="SAP Templates from Comparable Studies platform preview">
+            <img class="offer-preview-img" data-preview="ask-3" src="power-calc.png" alt="Power Calculations from Precedent platform preview">
+          </div>
         </div>
       </div>
-      <a href="https://blackcatstat.ai" class="offer-cta" target="_blank" rel="noopener">Ask a question free →</a>
+      <span class="offer-cta disabled" aria-disabled="true">Coming Soon</span>
     </div>
 
     <div class="offer-group purple-group reveal">
       <div class="offer-group-head">
         <div class="offer-group-tag">Generate &amp; deliver</div>
-        <div class="offer-group-line">When you're ready for the deliverable, our team builds it with you.</div>
+        <div class="offer-group-line">When you're ready for a deliverable, our team and AI system build it with you.</div>
       </div>
-      <div class="offers-grid">
-        <div class="offer-card purple">
-          <div class="offer-title">Protocol Review &amp; Design</div>
-          <div class="offer-desc">A single misaligned endpoint can trigger a Complete Response Letter and cost you a year. We stress-test your protocol against FDA guidance, CRLs, and precedent — flagging every gap before it reaches the agency.</div>
+      <div class="offer-showcase preview-left" data-offer-showcase>
+        <div class="offers-stack">
+          <div class="offer-card purple is-active" data-preview="gen-1" tabindex="0">
+            <div class="offer-title">Protocol Review &amp; Design</div>
+            <div class="offer-desc">A single misaligned endpoint can trigger a Complete Response Letter and cost you a year. We stress-test your protocol against FDA guidance, CRLs, and precedent — flagging every gap before it reaches the agency.</div>
+          </div>
+          <div class="offer-card purple" data-preview="gen-2" tabindex="0">
+            <div class="offer-title">SAP Review &amp; Optimization</div>
+            <div class="offer-desc">Under-powered trials fail quietly — sponsors discover the problem after the data is locked. We reassess your sample size, power, and analytic strategy against regulatory precedent so the statistics hold up at submission.</div>
+          </div>
+          <div class="offer-card purple" data-preview="gen-3" tabindex="0">
+            <div class="offer-title">SAP Generation</div>
+            <div class="offer-desc">Waiting weeks for a SAP draft while your timeline burns doesn't have to be the norm. We generate a complete, submission-ready SAP in days, every decision evidence-backed and reviewed by a credentialed statistician.</div>
+          </div>
+          <!-- TFL Generation temporarily hidden
+          <div class="offer-card purple" data-preview="gen-4" tabindex="0">
+            <div class="offer-title">TFL Generation</div>
+            <div class="offer-desc">Manual TFL production is slow, error-prone, and the last bottleneck before submission. We produce Tables, Figures, and Listings directly from your SAP with full traceability — shell tables to production packages, delivered in hours.</div>
+          </div>
+          -->
         </div>
-        <div class="offer-card purple">
-          <div class="offer-title">SAP Review &amp; Optimization</div>
-          <div class="offer-desc">Under-powered trials fail quietly — sponsors discover the problem after the data is locked. We reassess your sample size, power, and analytic strategy against regulatory precedent so the statistics hold up at submission.</div>
-        </div>
-        <div class="offer-card purple">
-          <div class="offer-title">SAP Generation</div>
-          <div class="offer-desc">Waiting weeks for a SAP draft while your timeline burns doesn't have to be the norm. We generate a complete, submission-ready SAP in days, every decision evidence-backed and reviewed by a credentialed statistician.</div>
-        </div>
-        <div class="offer-card purple">
-          <div class="offer-title">TFL Generation</div>
-          <div class="offer-desc">Manual TFL production is slow, error-prone, and the last bottleneck before submission. We produce Tables, Figures, and Listings directly from your SAP with full traceability — shell tables to production packages, delivered in hours.</div>
+        <div class="offer-preview" aria-hidden="true">
+          <div class="offer-preview-chrome">
+            <span class="offer-preview-dot"></span>
+            <span class="offer-preview-dot"></span>
+            <span class="offer-preview-dot"></span>
+            <span class="offer-preview-label">Platform preview</span>
+          </div>
+          <div class="offer-preview-stage">
+            <img class="offer-preview-img is-active" data-preview="gen-1" src="protocol-eval.png" alt="Protocol Review & Design platform preview">
+            <img class="offer-preview-img" data-preview="gen-2" src="sap-decision.png" alt="SAP Review & Decision Support platform preview">
+            <img class="offer-preview-img" data-preview="gen-3" src="sap-section.png" alt="SAP Generation platform preview">
+          </div>
         </div>
       </div>
       <a href="contact.html" class="offer-cta purple">Work with our team →</a>
@@ -2098,6 +2640,7 @@
 
 
 <!-- PLATFORM ARCHITECTURE -->
+<!--
 <section class="how" id="how">
   <div class="section-inner">
 
@@ -2152,57 +2695,51 @@
     </div>
   </div>
 </section>
+-->
 
 <!-- FEATURES -->
 <section class="features" id="security">
   <div class="section-inner">
     <div class="features-header reveal">
       <div class="section-tag">Security &amp; compliance</div>
-      <h2>Trusted. Validated. Secure.</h2>
+      <h2>Trusted & Validated</h2>
     </div>
 
     <div class="features-grid reveal">
-      <div class="feature">
+      <div class="feature teal">
         <div class="feature-icon">
           <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
         <div class="feature-title">Source-locked outputs</div>
-        <div class="feature-desc">Every sentence in a generated protocol is linked to its regulatory or documentary source. Reviewers see exactly where each claim comes from. No guesswork, no exposure.</div>
+        <div class="feature-desc">Every sentence in a generated protocol is linked to its regulatory or documentary source. Reviewers see exactly where each claim comes from. No guesswork, no hallucinations.</div>
       </div>
-      <div class="feature">
+      <div class="feature purple">
         <div class="feature-icon">
           <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="15" y2="11"/></svg>
         </div>
-        <div class="feature-title">Template library</div>
+        <div class="feature-title">A template for every purpose</div>
         <div class="feature-desc">Built from publicly available SAPs from leading pharmaceutical companies and CROs, with options tailored to your indication, study phase, and design — so every draft starts from the right baseline.</div>
       </div>
-      <div class="feature">
+      <div class="feature teal">
         <div class="feature-icon">
           <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         </div>
-        <div class="feature-title">Regulatory intelligence retrieval</div>
+        <div class="feature-title">Regular intelligence retrieval</div>
         <div class="feature-desc">Our platform continuously indexes FDA guidance documents, complete response letters, and agency precedents, surfacing the right regulatory context for queries.</div>
       </div>
-      <div class="feature">
+      <div class="feature purple" style="display:none" aria-hidden="true">
         <div class="feature-icon">
           <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         </div>
         <div class="feature-title">Enterprise-grade security</div>
         <div class="feature-desc">Your data is never used for model training. Tenants are fully isolated. Secure cloud storage with access controls and audit logging</div>
       </div>
-      <div class="feature">
-        <div class="feature-icon">
-          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        </div>
-        <div class="feature-title">Team collaboration</div>
-        <div class="feature-desc">Invite statisticians, medical writers, and regulatory leads into a shared workspace. Track changes, comments, and version history across every document.</div>
-      </div>
-      <div class="feature">
+      <div class="feature purple">
         <div class="feature-icon">
           <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         </div>
-        <div class="feature-title">Protocol & SAP generation</div>
-        <div class="feature-desc">Full draft output for both documents: endpoints, statistical methods, estimands, sensitivity analyses, structured to FDA expectations and ICH E9(R1).</div>
+        <div class="feature-title">Section generation based on real FDA expectations</div>
+        <div class="feature-desc">Full section output for both documents: endpoints, statistical methods, estimands, sensitivity analyses, structured to FDA expectations and ICH E9(R1).</div>
       </div></div>
   </div>
 </section>
@@ -2220,6 +2757,87 @@
       <div class="quote-name">Robert Rachford, CEO at BetterBiostatistics</div>
       <div class="quote-divider"></div>
       <img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCACuAfADASIAAhEBAxEB/8QAHQABAAMAAwEBAQAAAAAAAAAAAAYHCAQFCQMBAv/EAFAQAAEDAwIDBAUFDAULBAMAAAEAAgMEBREGBxIhMQgTQVEUImFxgQkVMpGzFjM2N0JScnR1obGyI1ViwdEYJDg5c4KEhpKkwhc0NVOTlPD/xAAaAQEBAQEBAQEAAAAAAAAAAAAABQQCAwEG/8QAMBEBAAEEAQMCBAUFAAMAAAAAAAECAwQRBRIhMVFhE0GBsQYUMnGRIjM0NfAVwdH/2gAMAwEAAhEDEQA/ANjIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiL41VZSUgaaqqgg4vo95IG592V9iJmdQ+TVFMbl9kXC+eLR/WlD/8AsN/xX2paykqs+jVUE+OvdyB2PqXU264jcxLmLtFU6iYfdERcOxERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAVab6/eLR+lL/BistVpvr94tH6Uv8ABircH/n2/r9pRfxF/rbv0+8OqsW3E91s9LcW3aOIVEYeGGEnh+OV/F226vtqiNZQVUdUYvW/osskHtA/wKsfQH4GWr9XC7wkAEnkFru87mW79VO4mIme2o9WKx+HMG7j0VdMxVMRO4mfOv4VxtdrCqrar5lushklwTBK76Rx1a7z96sdUlYgyfdNjqAZi9Ne4FvTh55PuV2rw5yxbtX6aqI11RE69JaPw7k3b2PVTcnq6KpiJ9YEXxrquloaZ9TWTxwQsGXPe7AChlbudYoZC2ngq6kD8oNDQfdnn+5TsfDv5H9qiZVMnPxsX+9XFKcoofZ9xNP184glfLRPdyaZm+qT7x0+Kl7HNe0PY4OaRkEHIK5v4t7HnV2mYdY2XYyaeqzXFX7P1Ri0a0oLlqN9jipalk7HyNL3cPD6mc+OfBcjVGrbXp2pip69lS58rONvdMBGM48SFVGmr9RW7XMt6qGzGmfJM4BrQXYfnHLPtVXj+Lqv2blyuifH9PvKPyfMU42Rat0Vx+rVXtHb+F7L8eeFpcfAZUYsOubNerpFbqSOsE0gJaZIwG8gSfE+S/dTa0tFjrn26sjq3Td2HZjjBbg9OpCn/kMn4nwuierzr2U//JYvwvjRcjp3rfy36P3SWs6DUdfLR0tLUwvjiMhMvDgjIHgT5qTKi9t7/Q6evFRV17ZnRyU5jHdNBOeJp8SPJWjprWVpv9e6ioWVTZWxl571gAwCB4E+aocrxVWPdmbNE9ER5TOF5mjJs0xfrj4kzPb7JGiKPai1lYrJKYKmodLUDrFCOIt9/gFIs2Ll6rpt0zM+y3fyLWPR13aoiPdIUUBj3Ss5kw+hrGt/OHCf3ZUtsd8td6p++t1WybH0mdHt97TzC97+Bk48dVyiYhnx+SxMmrptXImfR2KIo7ctY2mg1A2xzsqjVOexgLWAsy/GOefaPBeFqxcvTMW43Md2i9kWrERVcq1Ezr6pEij+oNY2KySmCqqjJUDrFC3icPf4D4lf3pPVFBqT0j0KKePuOHi7wAZznGMH2L0nDvxa+LNE9Pq8ozsab3wIrjq9Pm71ERZmsREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAVab6/eLR+lL/BistVpvr94tH6Uv8GKtwf8An2/r9pRfxF/rbv0+8Ois2s9UUFqp6OjoIX08LA2Nxp3uJHvBXGv2ttT1tO6kqXijY8Yc2KIsLh7zzVq6A/Ay1fq4Xa19HSV9M6mrKeOeJ3Vj25C318pi2sirePHaZ7/Pz58JtHD5d7Fp6cme8R2128ePKv8AZ2isjGSVUNYKi5luHxuHD3TfYPH2n/8AjYz3NYwvcQGtGST4BUjqikk0XrWOW3PcIwGzxAn8kkgtPs5EK19R1fHo6tracnD6N0jD7C3IXhy2PN29Rfpq3Tc8b+Xs0cLlRasXMeqiKarXnXz9/qrK7VVy19q35vpH93RRuPAD9FjB1efMn/AKwrXonTlDTtj+b46h4HrSTDic4+fsVSaOu15tE1RNZ6Tv3vaGvPdF+B8Oikv3aa3/AKs/7Vyq8hh5U6s49UU0Ux66mf3RuMz8TVV/Komu5VPnp3ER6QkuqNvrRX0b32yBtFVtGWFn0HHyI/vC6Hai/VdLdX6ZuDnYy4Qh55xvbnLfdyP1L4fdprf+rP8AtXLprUy91WuaK6z26eKSStjfIWwlrRlwB93LK5tYl+ca5ZyqomNbid7mJd38zHjLtX8OiaZ3qqNaiYlb950/aLxMya40bJ3xt4WlxPIdVUmkrVQVm4k1tqadslI2WdojJOMN4sfwV3KntDfjYqP9vU/+Sn8Rfufl78dU9qe3fx58KXN49r81jT0x/VX37efHn1WRbNL2K21jKyit8cM7M8LwTkZGCl603ZbnO+srqFk0/BjjJPQdF3K/mb7y/wDRKjRlXuvr65367na/OJY+HNHRGvOtRraldqLTb7vfamnuNO2eNlMXta4nkeJoz+8q17RpyzWmpNTb6FkEpaWlwJ6eX7lWuyH4S1n6mf52K31Z/EF+7GVVRFU61HbfZB/DOPZqwqbk0x1bnvrv/KHbpakkslqZS0b+Gsq8hrh1Y0dXe/ngLo9v9C01XRMu99a6d0444oS44wefE7xJK6TeOSSTWXdnJDKdjWD35P8AErmx6y1rGxrGWoNa0AACldyC3WcS9bwKIxpiJr7zO9T7RH/fdOv5ti5yVyrKpmqmjtTERuPeZ/77J/PpDTU0JidZ6VoxjLW8JHxCrXVVlrtDXuC52qd5pnu/o3O54PUsd5hc37tNb/1Z/wBq5dbqK96rvtv9BrbW/u+IPBZTOBBC+4GLmWbmrtcVUT5iatnJZeDkWt2bdVNyO9MxTrv9FuaeucV4s1NcYRwtmZktznhPiPrVQboySxbg1EsLi2VncuYR1BDG4U/2kiqYNKdzVQyRObO/DXtIOOXmoXrZrX7sxMcMtdUUwI8xhiz8Tbpschdpp7xEVfxuGnmrleRxlmurtVVNP86lJtJbf0LKVtbfmOq6yYcbo3uPCzPgfM+eVLrTZrZae8+bqOOm73HHwDrjp/ErnooWTnX8iZmuqdT8vl/D9Fi8djYtMRbojcfP5/yIiLI2iIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICrTfX7xaP0pf4MVlqE7q2C532K3ttsLZTC6Qvy8Nxnhx19xVPh7lFvNoqrnUd/tKRztqu7gXKLcbmddo/eHdaA/Ay1fq4Xc1E0NPC6aeVkUbBlz3uAAHvVPwaW19BC2GGSeONgw1rarAA+tDojWlxcGV0/qZ6zVJcB8Oa33eMx67tVyrIp1MzP8A3dOs8tlW7NNunFqmYiI9u0fs4WuLj91esY47Y0yMw2mgOPpcyS73ZJ+CuN9vjdYza85Z6P3GfZw4XR6K0ZQ6db6Q93pVc4YMpGA32NHh71KVl5POt3Oi1j/po8T6z6tfEcfdtfEvZP67nmPSPRTe3dybpnVlTbbme4ZKe5e53INeDyJ9h8/arkBBAIIIPQhRPXOi6XUI9Kge2muDRgSEeq8eTv8AFQyG3bi2Rvo9Kal8LeQEbw9vwytd+ixymr1NyKK9d4nt9YYsa5k8PuxXbmu3vdM095j2mFtVlTBR0slTUyNjijaXOc44AAUX0rrVmobu6ipbbKyNjS50znDAHhy9qhr9Oa61HMxl1kkihB5md4DR7eEdVY+k9PUWnbd6NS5fI7nLK4es8/3D2LLfxsTEszFVUV3J8a8Q24+Xm5t+maKJt2487jvPtr5O4VOaTkZR7tTNqHCPNVUMBPLmeLH1q41A9eaEfdq03S0yshq3c5GPOA8joQfArnici1RNy1dnUVxrfo+81jXrkWr1mOqbdW9eqeL8kBdG5o6kEKvtF2nWlFfqc3aolfQMDg8GcPH0Tj9+FYSxZePTj19NNcVe8KGHk1ZNuaqqJo+Wp8qc2ZmjptWTwTuEcklM5jQ7llwc049+AfqVxqutZ6Aqam6OuthmZFLI7jfE53Dh35zT4LmaCt2r6O7vdfJ5H0ghLWh0weOLIx/eq/JxYzY/NUXIidd6Z879kTiJyOPn8nctTMbnVUeNT6um3stUjaqkvUQJYWdxLj8kgktPxyR8Apxoy+wX6yQ1LJGmoa0NqGeLX458vI9V2Vyoqa40UtHWRCWGUYc0qr7poO/2avdVabqpJIvyeGTgkaPI+DlxZu2M7Fpx7tXTXR4mfGvR3kWcjj8urKsUddFf6ojzEx84WwotrHW1Bp6pjpO6dV1DhxPYxwHdjwz7T5KFuO5tQw07m1rQeRd6rf3rt9G7fSw1rbnqCRs0rXcTYAeL1vNx8fclHH4uLu5k3Iqj5RTPeX2vk8vL1bxLVVMz5qqjUR/9Ty01MtbbYKuandTPlYH9045Lc9Afaqo1n+NyH9Zpf4MVwquNS6WvNbuHFd6ena6kbPA8v4wDhvDnl8CvPhr1u3fuVVTFMTTP/rs9OdsXbuNbpoiapiqnfb9+6x0RFFXxERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBEUF7QdXVUGyGsqyiqJaaphtE74pYnFr2ODTggjmCgnSLzM2tt2+G5fp33JajvNX6Dw9/3l2dHw8WcdXc+hUyqtsO1ZZGG4U1XqCV8ILv80vPG/l5N48n3DOUHoCixTsB2pNSW3UkGjt1w+aJ03o/zjNF3VTSyZxwzNwMjPInAcPHPhtVjmvaHtIc1wyCOhCD9RZY7Ym+GvNsNfWmzaUqKCOkqrW2qlE9KJXcZlkbyJ8MNHJaC2qvNdqLbPTN/uTmOrbjaqaqqCxvC0yPja52B4DJPJBJUREBERAREQEREBEUT3D3H0Vt9HSSaxvsdqZWFzacvhkk4y3r9Bpx18UEsRcKw3W332zUl4tVSKmhrIhNTzBpaHsPQ4IBHxC5qAiIgIiICIoxuHuBo/b6hpa3WF6jtVPVSmKB74ZJON4GSPUaSOXmgk6LrtMX21amsFHfrHWNrLbWx95TztY5oe3OM4cAR08QuxQEWOT2hdyP8ph+gvSbd8yjUTreG+hjvO5Epbjiz1x4rYyAiIgIiICKD6y3b270fqSHTmpNSxUF1max0dO6nmeXB5w3m1hHM+1Tdrg5oc05BGQg/UXR7g3OqsugtQ3mhLRV0FrqamAubxAPZE5zcjxGQOSzb2P99df7m7m19g1VUUElFBZ5atggpBG7vGzQsHMeGHu5INXIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgKv+0j+ITW/wCxaj+QqwFX3aR/EJrf9i1H8hQZ2+TX66x/4f8A81speb3ZY3ttez5vnzlZKu5/OXdcHcStZwcGeuferkvHbctYpHC0aFq3VJHqmprGhgPtDW5KCHfKL2a00O4diulHHFFX3ChcawMGC/gdhrz7cZGf7K15sdWVlw2b0dW3DiNVNZaV8pd1cTE3mff1+Kw5oKzai7Te8j7xqm9W2jpYXM7+D0hrZBC08ooIs8Rz4u6cyc55L0PoKWChoYKKljbFT08bYomNGA1rRgD6ggiW4d72zs1ZSnXdRp6CpmjPo5uUUbnOY08+EuB5An96lVqdQvtlK+2CEULoWOpu5AEfdkAt4QOQGMYWLvlKfwl0Z+p1X88a1ztl+LfTH7HpPsWIJCohrHc/b/SEzqfUerLXQVDesD5gZB72jJContl79XHSVT/6faJqnQ3yeNprquLm+ma8erGzykcCDnqARjmciG7UdkGv1BbINQbj3+ro6isAmNDAOOcB3P8ApJHZw455jBx5oNH2HfbaW91Laah1xahM44ayZ5iz/wBQAVjRSRzRMlie2SN4DmuachwPQg+IWVNWdivS09vedMamudFWNaeAVgbLG4+3ABHwVabQbna27Pe479vNwhUy2ATBkkTnGQU7XH1Z4D4xnOS0defIOyg3wuNdLhQWqglr7lWU9HSQjikmnkDGNHtJ5L7U08NTTx1FPI2WGVgfG9pyHNIyCD5YWB+0bqLU+8PaMZthbq91NbKS4/N9NAXERd4OUkzwPpEetj2Dl1Qamn7ROzcNaaR2t6Fzw7hL2teWZ/SAwrE07frLqO2suVhulJcqR/SamlD258jjofYVm6i7FuhWWnuavUd7lri3nOzgawO/QweXxVKSUutOy3vhBT01XUXGzVLI5pREw93W0heQQ5vQSNIdjyOPAoPQW6V9Ha7dUXG4VMdNSU0ZkmmkOGsaOZJPksS9vjW+kdXW/S7NM6goLs6nlmMwppeLgBDcZWyNWWek1foy4WSSofHSXWjdCZox6wY9v0hn2FYB7Vmx9k2hpLHNaLvXXA3GSRsgqWtHDwgEYx70GqNkt2ttLXtHpa3XHWtmpauntsUc0Mk4DmODeYI81ctlulvvVqp7raqyKsoalnHDPE7LHt8wVkHbTsj6S1ToCx6jqtTXeCe40UdRJHHGwtaXDOBnwWqtu9L0uitEWrS1FUS1FPbYO5jllADnDJOTjl4oO/JAGScBV7qfevavTlS+lumtbUyoYcOiil71wP8Au5WYO03vVqbcPXDtqds5Kp1E6p9CmfSEtkuE2cOaHDpEDkHnggEnkpNoPsW2ptujn1tqWrmrXtzJT28BrIyfDjcCXY88BBoXRe7O3OsahtNp7V1sq6l3JtOZeCQ+5rsE/BdlqzXmjdJ1cFJqTUdvtU87OOKOpl4S9ucZHxWY9wOxlT09DJX7famq2XCEccVNXYw9w8BI3HCfIkYWZt0NY6x1LcbXadcGWS7aea6gdJO3E5Af9GTzcMYz1Pjk80HqhPcKKC1SXSapjZQxwGofOT6jYw3iLs+WOaxt29teaN1dozTdLpnUdvu00FxkklZTS8RY0x4BPxWrqa1RX3a+KxzyPiiuNlFI97PpNbJBwEj2gFYW7Vewth2i05ZrnaLzX18lfWPge2oa0BoDOLIwg0Z2cN1dubJsdpO1XbWVooq6moQyaCWcB8buJ3IhXnYbxa79aYLtZq6CuoZwTFPC7iY8A45H3hY42c7KWldbbYWHVdbqS7U1RcqXvpIomMLWHiIwM8/Baw2v0dR6B0NbdJ0FVNVU1AxzGSzAB7suLueOXig6g37af7ufmY1GmPuo9J4e57mP0nvjz64zxeOcqeLAr/8AWDf8xN+zC3tVzNp6WWof9GJhefcBlB12qNSWDS9tdctRXejtdIOXe1MoYCfIZ6n3KAUPaH2drK5tHFregbI44DpGvYwn9IjCx3YqTU/aj3zqo7jepKS3xsfM0HLm0lK1wDWRszjiORnzJJKvS59izRElndDbtSXmC4Bvqzy8D2F3tYAOXxQadt9ZSXCjiraCqhqqaVvFHNC8PY8eYI5FcLU+orHpi1m6agulNbaJrwwz1D+Fgcegz7Vibs2aj1js3vy/anUb55bRWV4opIwC6JkzwO5mjJ6B+WZ9jhnmFrjejbu3boaJk0tc66poqd88c5lgALssOQOfJBiXtb6p07qLtCWq82O8Ulwt8cNIH1ED+JjS1+XZPsWzqXefaoxRRjXljLi0DHpA6rBO/wDtZa9ut26DRtuuNXV0tTHA900zWh47x2DjHLktIUfYu0Y0w1A1Xesjhfju4/eg1BVPpJLdK+q7p9G6ImXvACx0eOeQeowoft7fdr7zc6huhqnTk9bFDmY26KNsjYyR1LQDjIH7lINRxCDRlygaSRHbpWAnxxGQsXfJu/jE1R+yWfbNQboXEvF0ttnoJK+7V9NQ0kf05qiUMY34ldbr/VVp0To65aovk/dUNvhMj/N56NY3zc5xDR7SsI0UO5nau3FqS+udQWCgPFwuJ9GoYyfVAaPpyux16nHUABBrmr7QmzlNV+jP1zbnPzguj4nNHxAwpxpTVumdV0hqtN3233WIc3GmnDy33jqPis8UfYt0Gy3CKq1HfJqvHOZvdtbn9HB/iqb3c2T13sDWU+u9Haiqam3U8wBq6cGOamJPIStHJzHdD4HOCOfMPQVfkj2RsdJI5rGNGXOccADzKqzsy7s027OgRcZWxwXqgeILlTs6B+MtkaPzXDOPaHDwVGdvzcm/wXi37aWOqlpaWpp21FeYncL6gucQyIn8zlkjxJGeiC+7/v3tHY699DXa2txnYcPbATKGn3tBClWitc6Q1pTGo0vqGgujWjL2wSgvZ729R9SzboLsY6bOn6ao1dqG4z3GaJr5I6LhjiicRnhBIJdjpnkqu3r2h1R2etRWjWmh7/V1FG+oLIpgzEsEgGeCRo5PY4A+zkQR0QegqKJbPauOuttbJqmSn9GnraYOqIcEcEoJa8DPhkEj2EKWoCIiAiIgIiICIiAiIgIiICIiAq+7SP4hNb/sWo/kKsFV/wBpH8Qmt/2LUfyFBlrsAaR0vqk6q+6Ow2+7ej9x3PpUDZODPFnGenRanrtl9qK2B0E+gLAWEdW0jWke4jBCzn8mv11j/wAP/wCa2UgwR2q9i27SVFHr7QNXWU1qNW1jou9JkoJTksLX9Sw4xzJIOBk5WpOy5uRLubtNRXmv4RdqR5orhjkHysAw8D+00td7yR4KA9v7WFotm0DtIvnjkut4qYTHADl0cUbxI6Q+Qy0N9vF7Cvl8njZ6yh2fuN0qY3xw3K6OdT8Q+mxjWtLh7OLiH+6UFd/KU/hLoz9Tqv541rnbQgba6ZJ6Cz0n2LVkb5Sn8JdGfqdV/PGtc7Zfi30x+x6T7FiDCfZ6oY9ye19Ndb+0VTY62rur45OYc9jj3Y9zXFhx/ZA6L0NXnbpyufsP2vp3XyF8VsbXzRSPx1o6jPBKPMAFriB+aR1XodSVEFXSxVVLMyaCZgfHIx2WvaRkEHxCD6LJPyjunKOTTGndVMia2sgqnUT3gc3RuaXAH3EH61rZYr+UN15Q3Gus231snZUVNHKaquEZz3b3DhZGf7WCTjwyPNBf3ZIvNTfez7pasq3l8scD6YuJ5kRSOYP3NCzh2ntqNfaM3en3W0LSVdZSzVQr+9pIu8ko5+XFxMGSWk5OcEczlaj7OOmKjR+yumbHWRmOqjpBLOw9WvkJeR8C5fxoXezbfW2rJNK6dvklRd42yOdTyUc0P3s4cAXtAJHlnPI+SCh9BdtO3OpYaXXGlqinq2gNlqrc8OjcfF3duwW+7JV77d7rbYbnzCCxXWirK9jOL0Oqh4Jw3xw1w5j9HK7vWG22g9Xh51HpO03CV49ad9O0Tf8A5Bh371h7tabW0WyutdP37RFxqqKnuJllpoxKe9pJoSzJa7qWkSNx7j5hB6GNAaA1oAA5ADwWP/lJ/wD4zR/+2qP5WrTW1F+qdUbZ6a1DWtDaq4WyConwMAyOYC4geROSFmb5SdrvmnR78Hh7+oGfbwtQaF7P34ktH/smD+VdhvBdp7FtZqe8UxLZqS1zyRkdQ4MOCut7PEkcux+jnxvD2m1QjIPk1d/uFZDqTQt8sIxxV9BNTtz+c5hA/fhBjr5OjT1LcNaai1TVsEtVQU7YadzuZY6Unjd7yBj4lbiWBew7rGn0Fu3ddG6leKA3T/NAZvVEdVG4gMdnpn1hz8cDxW+kBYK+UI03RWrdqzX6kibFJeaPNSGjHHJE4N4z7S0tH+6t6kgAknAC86+21uBbtbbxQ0NmqG1NvsUQoxMw5bJMXcUhafEA4bnzafDCD0A0h+Cdn/UIPs2rMvykn4B6V/akn2RWmtIfgnZ/1CD7NqzP8pG1x0BpZ4B4RdZAT7TEcfwKC3+yr/o8aL/Z4/ncrNVXdk6WObs7aNdE9r2ihLCQehbI8EfAghWigwK//WDf8xN+zC3vURNngkhf9CRpa73EYWCH/wCsG/5ib9mFuzUF2obDYq+93OR0VDb6aSpqXtYXlsbGlzjwtBJwAeQGUHn9qTR+6HZs3Pn1Tp23y1VmY9wirBAZaaWncc91Nw82HoOZHMZBV06N7aOjq5kceqNO3K0TEDjkp3Coiz7Ojv3K79r91dC7mm4M0dd3XA0AZ6S19NJCWh/FwnD2jI9U9P71x9abM7Y6ujk+eNHWvvpOtRTwiCXPnxMwSfflBztv9aaB3Dp33XS1xt10kiLTLhgE8R8OJrhxDpyPTlyUxXnBra0V3Z67S1LT6Wu1RJTRS09REC7DpKeQjigkA5O6OH1HkV6PhBgnts/6Ttm/2FF9ot5U3/tov0B/BYM7b5EPaXs00p4IxTUbi49MCQ5K3nSEOpIXNOQWNIPwQcDVv4K3f9Rm+zKxV8m7+MTVH7JZ9s1bV1b+Ct3/AFGb7MrFXybv4xNUfsln2zUFgfKOXippdvtPWWJ5bDXXB8kwB+l3bPVH1uyrF7GmnKLT/Z/sElNE0TXRjq+pkA5ve88s+5oaPgof8oNpWrvW0tFfqOF0pslb3lQGjJbDIOEu9wPDn35XY9hfX1u1LtDS6ZNQxt3sGYJYCfWdCSTHIPZg8J9rfaEGglx7nQ0dzt89vuFLDVUlRGY5oZWBzJGnqCD1C5C6HcDV1j0LpOt1NqKq9HoKNnE7Ay+R35LGDxcTyAQfultG6V0tJPJpzT9utL6gBsxpYGx94B0zjrjJWcu2/stqPV9dRa60hSyXCspKf0esooh/Sua0ktkjH5RGSCOvTGVcuzG8OmN2GXGXTFDeYobcWNmmradsbC52cNaQ92TgZPly80vW9e3Fm1+3QtyvklPfnTRwCB1HNw8b8cI4+Hh55HPKDNO2Xa8vmmKKLTm5OmqmuqKICE1cP9DUgDkBLG4AFw8wRnxGeZvvQXaC2l3AqoLXFdo6WuncGxUlzh7vjf4BpOWk+XPmrG1RpLS+qIO51Hp+2XVoGG+lUzJC0ewkZHwWQ+2TsHo3R+i/u30hC61mKpZDU0QkLonh5wCzPNpB8M9EG04IYoIxHBEyJg6NY0AD4Bf2qS7FWq7tqvY6imvVTLV1VDUyUYnlcXOexuOHJPMkA4z7FdqAiIgIiICIiAiIgIiICIiAiIgKB9oamqKvY3WdLSQS1E8tnnbHFEwue8lhwABzJU8RB5j7Tam3k2v9P+5LTt0g9P4O/wC+sskueHOMZby6lTip307UFwZ6JS2+6Qyyeq002m8yHPlmM8/gvQBEGCNs+zbubuTqYaj3QnuNsoZHh9RJcJS6uqB+a1hJLB4ZdjHgFunT9ot1gslFZbTSx0tBRQthp4WDAYxowAuciDGvyiVjvd31FpB9ps9wuDY6SpEhpaZ8oaS9mAeEHC1ZtxHJDt5puGaN8cjLTStexwwWkQtBBHgV3yIKY7T2xtDu3ZYaqimioNSUDC2lqXj1JWHn3UmOeM9D4H3rLuntwd/tgZHaZu1pqp7VA4iGC4Uzpqce2Gdv5PsDiB5A5XoSvyRjJGFkjGvaerXDIKDBN97UW9GsKc2XSun2W6pqBwcdtopJ6nyPBnOPeBkeBCnPZm7NF3h1FT6+3UjL6xkvpVNbZ5O9kdLnIlnOTzB58OTzxxeIWuaalpqVpbTU8MAPURsDc/UvqgLFHaH2Q15ozcubdPaqCqqI31Lq6SKhbxT0kziS8iPq+NxJ5AHqQRhbXRBhil7Ye5VHStpLloy2zVsY4HyOjliJcOWSzwPsXRW7R28PaX1/TXvVdJVWuyQtDBVS0zoKaCHOS2Brvvjj4kZ8MnAC37NR0k0olmpYJJG9HPjBI+JX3QcKwWqisVioLLbYu6oqCmjpqdmc8LGNDWj6gFXXaZ2pbuzt/wDNFPUx0l1o5fSaCaQepx4ILHeQcPHwwFaSIPPrSGrO0lslSyaUh0vcai3QSOMUNVapKqnaSeZilj6tPXAcRnwBJW2tob5etS7aWK+6ipG0d1raUSVUDYXRBj8kY4XEkdByKlaIMwdq3s3VGtrpLrbQjYYdQOaDWUbniNtW5o5Pa48myYAHPAOBzB5qntM9oXfLbOFunNU2Wa4ClHAxt4o5GVDGjljvBgvHtPF716AL51NPT1Mfd1EEUzPzZGBw/egwfcd3O0HvaHaY0pZJbbR1H9HUvt1O6NvCfCSof9BvuLc9OfRQrerYm+7d1OnaCkprjfa6rpnT3CakpXyQxyceAxpAPQeJ6r0nijjiYGRMaxg6NaMAL+kHW6TY+PS1pY9rmPbRQhzXDBB4ByKh3aG20p91dtqnTTp201ZHK2qoZ3DIjnaCBn2FrnNP6XsVhog899JXntHbDOqdNUema+e2iYvbFLbX1lIXHq6OSPpnkSA73jK2pshqK/6r2ws9/wBUULKG71cbnVEDYHQhhDyB6jiSOQHUqaIgww7T1/8A8vP50+Y7n6B8/tf6V6I/uuHuxz48Yx7crcFxo6e4W+poKuJstNUxOhlY4ZDmOBDgfeCV90QYD1Ttvu32dtf1GqtA09VcbG4uayoghM7DCTnuqiMesMcvW5DxBBXbydsXceanNNTaJtjaxw4Wv4Jnet58Hj7srcq+Ao6MVHpApYBN/wDZ3Y4vr6oMP7J7NbhbrboM3K3UgrqShZVMqnith7mWsczBZGyMgFsXJozgDh5DzG50RBnjti7GXDc2io9R6XMZv9thdEaZ7g0VcWeINDjyDwc4zyOccuSpHSW8HaV0PR0mma7Stwq4qThgjddLHO+RjByA428PGAOjjnl4reqIOovpmqdGV5MZM0tukJY1pzxGM8gPesf/ACeVhvlo19qWW62W40Eb7W1rH1NK+IOPet5AuAyVtdEHwuNFS3G31FvroI6ilqYnRTRSDLXscMFpHkQVhfdHYbcnZ/Vzta7TT3Crt0by+L0EGSppWn8h8eD3rPg4Y+kPFbvRBhKg7YG6NDSeh3TSlrqa1jeEyugliPEPFzAevsGF0rLNvt2mdQU893jmorFA8YlkhdT0NOPExtPOV/8A1HzIC9AJqKimmE01JTySDo98YLh8V90ET2k0DZdttEUel7Gw91Dl80zh69RKfpSO9p/cAB4Ki+2HsJetaXKHXuhm95fKeJrKqja8MfOGc2vjdkDjHTHLPLHPrqBEGD7H2pd4NG0LbDqvSrK+tpAIzJX0slPUYHIcYAAJ9uBnxz1XTap1Jvh2la+isVLp+Smssc3HwQU746SN3580zupAJwM+4Er0EqaWmqWhtTTwzAcwJGBwH1r6RsZGwMja1jRyAaMAIIVsht/SbZ7c2/SlNP6TJCDJUz4x3szjlxA8B4D2BTZEQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQf/9k=" alt="Better Biostatistics" style="height:48px;mix-blend-mode:multiply;margin-bottom:0.4rem;" />
+    </div>
+  </div>
+</section>
+
+
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="section-inner">
+    <div class="pricing-header reveal">
+      <div class="section-tag">Pricing</div>
+      <h2>Plans that scale<br>with your program.</h2>
+      <p class="pricing-intro">Start free with the knowledge base, move up as your needs grow — from self-serve search to fully delivered, submission-ready deliverables.</p>
+    </div>
+
+    <div class="pricing-grid reveal">
+
+      <div class="price-card">
+        <div class="price-name">Trial</div>
+        <div class="price-tagline">Explore the precedent yourself, no commitment.</div>
+        <div class="price-amount">
+          <span class="price-value">Free</span>
+        </div>
+        <ul class="price-features">
+          <li>Ask questions about a comprehensive set of FDA statistical and regulatory documents</li>
+          <li>Source-linked citations on every answer</li>
+          <li>Trail period based on usage, not time</li>
+          <li>Community support</li>
+        </ul>
+        <span class="price-cta disabled" aria-disabled="true">Coming Soon</span>
+      </div>
+
+      <div class="price-card featured">
+        <div class="price-name">Basic</div>
+        <div class="price-badge">Most popular</div>
+        <div class="price-tagline">For those seeking in depth analyses.</div>
+        <div class="price-amount">
+          <span class="price-value">$29</span>
+          <span class="price-period">/ month</span>
+        </div>
+        <ul class="price-features">
+          <li>Everything in Trial, plus</li>
+          <li>Precedent-aware AI agents</li>
+          <li>2 SAP or protocol section generations</li>
+          <li>2 SAP or protocol template downloads</li>
+        </ul>
+        <span class="price-cta disabled" aria-disabled="true">Coming Soon</span>
+      </div>
+
+      <div class="price-card">
+        <div class="price-name">Pro</div>
+        <div class="price-tagline">Generate content for protocols and SAPs</div>
+        <div class="price-amount">
+          <span class="price-value">$129</span>
+          <span class="price-period">/ month</span>
+        </div>
+        <ul class="price-features">
+          <li>Everything in Basic</li>
+          <li>Draft sections of a Protocol or SAP</li>
+          <li>Unlimited SAP or protocol template downloads</li>
+          <li>Ability to pause subscription if your work is seasonal!</li>
+        </ul>
+        <span class="price-cta disabled" aria-disabled="true">Coming Soon</span>
+      </div>
+
+      <div class="price-card consulting">
+        <div class="price-name">Consulting</div>
+        <div class="price-tagline">Expert guidance on your program from a dedicated former-FDA biostatistician.</div>
+        <div class="price-amount stacked">
+          <span class="price-value">Custom</span>
+          <span class="price-period">based on project needs</span>
+        </div>
+        <ul class="price-features">
+          <li>Data and statistical analyses</li>
+          <li>Protocol, SAP, TFL &amp; regulatory strategy and writing</li>
+          <li>Backed by our AI tools so you know we have covered all FDA requirements and preferences</li>
+          <li>Check out our <a href="case-studies.html">case studies</a> to get a taste of what we can do for you!</li>
+        </ul>
+        <a href="contact.html" class="price-cta purple">Let's talk</a>
+      </div>
+
     </div>
   </div>
 </section>
@@ -2257,7 +2875,7 @@
       <details class="faq-item">
         <summary>How do I get started?<span class="faq-icon"></span></summary>
         <div class="faq-answer">You can try the knowledge base free to search precedent and ask questions yourself, or pilot the platform on your program and have our team build the deliverable with you. Reach out through the contact page to set up a pilot.
-          <div class="faq-cta"><a href="https://blackcatstat.ai" class="btn-primary" target="_blank" rel="noopener">Try the knowledge base free</a></div>
+          <div class="faq-cta"><span class="btn-primary disabled" aria-disabled="true">Coming Soon</span></div>
         </div>
       </details>
     </div>
@@ -2273,7 +2891,7 @@
     <p class="cta-sub">The platform is live. SAP generation, protocol review, SAP review. Bring us your trial and we'll show you what's possible.</p>
   </div>
   <div class="cta-actions">
-    <a href="https://blackcatstat.ai" class="btn-primary" target="_blank" rel="noopener">Try the knowledge base free</a>
+    <span class="btn-primary disabled" aria-disabled="true">Coming Soon</span>
   </div>
 </div>
 
@@ -2283,7 +2901,7 @@
   <ul class="footer-links">
     <li><a href="#features">Platform</a></li>
     <li><a href="case-studies.html">Case Studies</a></li>
-    <li><a href="blog.html">Research</a></li>
+    <li><a href="blog.html">Articles</a></li>
     <li><a href="team.html">Team</a></li>
     <li><a href="contact.html">Contact</a></li>
     <li><a href="https://www.linkedin.com/company/blackcat-bio" target="_blank" rel="noopener">LinkedIn</a></li>
@@ -2325,6 +2943,28 @@
     const children = grid.children;
     Array.from(children).forEach((child, i) => {
       child.style.transitionDelay = `${i * 0.08}s`;
+    });
+  });
+
+  // Offer card hover → platform preview swap
+  document.querySelectorAll('[data-offer-showcase]').forEach(showcase => {
+    const cards = showcase.querySelectorAll('.offer-card[data-preview]');
+    const images = showcase.querySelectorAll('.offer-preview-img[data-preview]');
+    if (!cards.length || !images.length) return;
+
+    const activate = (previewId) => {
+      cards.forEach(card => {
+        card.classList.toggle('is-active', card.dataset.preview === previewId);
+      });
+      images.forEach(img => {
+        img.classList.toggle('is-active', img.dataset.preview === previewId);
+      });
+    };
+
+    cards.forEach(card => {
+      const previewId = card.dataset.preview;
+      card.addEventListener('mouseenter', () => activate(previewId));
+      card.addEventListener('focus', () => activate(previewId));
     });
   });
 </script>

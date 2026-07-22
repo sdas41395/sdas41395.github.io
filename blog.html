@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Research | BlackCat Bio</title>
+  <title>Articles | BlackCat Bio</title>
   <link rel="icon" type="image/png" href="blackcatlogo_no_bg.png">
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="BlackCat Bio" />
-  <meta property="og:title" content="Research | BlackCat Bio" />
+  <meta property="og:title" content="Articles | BlackCat Bio" />
   <meta property="og:url" content="https://blackcatbio.ai/blog.html" />
   <meta property="og:image" content="https://blackcatbio.ai/og-logo.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="1200" />
   <meta property="og:image:alt" content="BlackCat Bio logo" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Research | BlackCat Bio" />
+  <meta name="twitter:title" content="Articles | BlackCat Bio" />
   <meta name="twitter:image" content="https://blackcatbio.ai/og-logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -114,6 +114,15 @@
       transition: opacity 0.2s !important;
     }
     .nav-cta:hover { opacity: 0.85; color: #ffffff !important; }
+
+    .nav-cta.disabled,
+    .nav-cta.disabled:hover {
+      background: #c5c8ce;
+      color: #6b7280 !important;
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 1;
+    }
 
     .nav-toggle {
       display: none;
@@ -348,10 +357,10 @@
   <ul class="nav-links">
     <li><a href="index.html#features">Platform</a></li>
     <li><a href="case-studies.html">Case Studies</a></li>
-    <li><a href="blog.html" class="active">Research</a></li>
+    <li><a href="blog.html" class="active">Articles</a></li>
     <li><a href="team.html">Team</a></li>
     <li><a href="contact.html">Contact</a></li>
-    <li><a href="https://blackcatstat.ai" class="nav-cta" target="_blank" rel="noopener">Try free</a></li>
+    <li><span class="nav-cta disabled" aria-disabled="true">Coming Soon</span></li>
   </ul>
 </nav>
 
@@ -359,7 +368,7 @@
 <div class="page-header">
   <div class="page-header-grid"></div>
   <div class="page-header-inner">
-    <h1>Research</h1>
+    <h1>Articles</h1>
     <p>Deep dives and perspectives from the BlackCat Bio team.</p>
   </div>
 </div>
@@ -400,7 +409,7 @@
   <ul class="footer-links">
     <li><a href="index.html#features">Platform</a></li>
     <li><a href="case-studies.html">Case Studies</a></li>
-    <li><a href="blog.html">Research</a></li>
+    <li><a href="blog.html">Articles</a></li>
     <li><a href="team.html">Team</a></li>
     <li><a href="contact.html">Contact</a></li>
     <li><a href="https://www.linkedin.com/company/blackcat-bio" target="_blank" rel="noopener">LinkedIn</a></li>

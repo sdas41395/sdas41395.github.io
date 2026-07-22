@@ -207,6 +207,8 @@ nav.site-nav .nav-links a:hover{color:var(--text)}
 nav.site-nav .nav-cta{background:var(--accent); color:#fff !important; padding:.5rem 1.25rem; border-radius:3px;
   font-weight:600 !important; letter-spacing:.04em !important; transition:opacity .2s}
 nav.site-nav .nav-cta:hover{opacity:.85}
+nav.site-nav .nav-cta.disabled,
+nav.site-nav .nav-cta.disabled:hover{background:#c5c8ce; color:#6b7280 !important; cursor:not-allowed; pointer-events:none; opacity:1}
 nav.site-nav .nav-toggle{display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:4px; z-index:110}
 nav.site-nav .nav-toggle span{display:block; width:22px; height:2px; background:var(--text); transition:.3s}
 /* PDF button in masthead */
@@ -256,10 +258,10 @@ footer.site-footer .footer-copy{color:var(--muted); font-size:.75rem}
   <ul class="nav-links">
     <li><a href="index.html#features">Platform</a></li>
     <li><a href="case-studies.html">Case Studies</a></li>
-    <li><a href="blog.html">Research</a></li>
+    <li><a href="blog.html">Articles</a></li>
     <li><a href="team.html">Team</a></li>
     <li><a href="contact.html">Contact</a></li>
-    <li><a href="https://blackcatstat.ai" class="nav-cta" target="_blank" rel="noopener">Try free</a></li>
+    <li><span class="nav-cta disabled" aria-disabled="true">Coming Soon</span></li>
   </ul>
 </nav>
 
@@ -493,7 +495,7 @@ footer.site-footer .footer-copy{color:var(--muted); font-size:.75rem}
   <div class="footer-logo"><img src="cat-mark.png" alt="" style="height: 34px; width: auto;"><span style="display:flex; flex-direction:column; line-height:1.02;"><span style="font-family:'Lora',serif; font-weight:700; font-size:1.05rem; color:#081532; letter-spacing:-0.01em;">BlackCat Bio</span><span style="font-family:'Lora',serif; font-weight:500; font-size:0.62rem; color:#6c6c6c; margin-top:2px;">Biostats from citation to submission</span></span></div>
   <ul class="footer-links">
     <li><a href="index.html#how">Platform</a></li>
-    <li><a href="blog.html">Research</a></li>
+    <li><a href="blog.html">Articles</a></li>
     <li><a href="team.html">Team</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>

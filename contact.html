@@ -67,6 +67,15 @@
     .nav-cta { background: var(--accent); color: #ffffff !important; padding: 0.5rem 1.25rem; border-radius: 3px; font-weight: 600 !important; letter-spacing: 0.04em !important; transition: opacity 0.2s !important; }
     .nav-cta:hover { opacity: 0.85; }
 
+    .nav-cta.disabled,
+    .nav-cta.disabled:hover {
+      background: #c5c8ce;
+      color: #6b7280 !important;
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 1;
+    }
+
     /* PAGE HEADER */
     .page-header {
       position: relative;
@@ -294,10 +303,10 @@
   <ul class="nav-links">
     <li><a href="index.html#features">Platform</a></li>
     <li><a href="case-studies.html">Case Studies</a></li>
-    <li><a href="blog.html">Research</a></li>
+    <li><a href="blog.html">Articles</a></li>
     <li><a href="team.html">Team</a></li>
     <li><a href="contact.html">Contact</a></li>
-    <li><a href="https://blackcatstat.ai" class="nav-cta" target="_blank" rel="noopener">Try free</a></li>
+    <li><span class="nav-cta disabled" aria-disabled="true">Coming Soon</span></li>
   </ul>
 </nav>
 
@@ -414,7 +423,7 @@
   </div>
   <ul class="footer-links">
     <li><a href="index.html#how">Platform</a></li>
-    <li><a href="blog.html">Research</a></li>
+    <li><a href="blog.html">Articles</a></li>
     <li><a href="team.html">Team</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>

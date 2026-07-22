@@ -122,6 +122,15 @@
 
     .nav-cta:hover { opacity: 0.85; color: #ffffff !important; }
 
+    .nav-cta.disabled,
+    .nav-cta.disabled:hover {
+      background: #c5c8ce;
+      color: #6b7280 !important;
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 1;
+    }
+
     /* ── HERO ── */
     .hero {
       position: relative;
@@ -1982,10 +1991,10 @@
   <ul class="nav-links">
     <li><a href="index.html#features">Platform</a></li>
     <li><a href="case-studies.html">Case Studies</a></li>
-    <li><a href="blog.html">Research</a></li>
+    <li><a href="blog.html">Articles</a></li>
     <li><a href="team.html">Team</a></li>
     <li><a href="contact.html">Contact</a></li>
-    <li><a href="https://blackcatstat.ai" class="nav-cta" target="_blank" rel="noopener">Try free</a></li>
+    <li><span class="nav-cta disabled" aria-disabled="true">Coming Soon</span></li>
   </ul>
 </nav>
 
@@ -2090,7 +2099,7 @@
   <ul class="footer-links">
     <li><a href="index.html#features">Platform</a></li>
     <li><a href="case-studies.html">Case Studies</a></li>
-    <li><a href="blog.html">Research</a></li>
+    <li><a href="blog.html">Articles</a></li>
     <li><a href="team.html">Team</a></li>
     <li><a href="contact.html">Contact</a></li>
     <li><a href="https://www.linkedin.com/company/blackcat-bio" target="_blank" rel="noopener">LinkedIn</a></li>
