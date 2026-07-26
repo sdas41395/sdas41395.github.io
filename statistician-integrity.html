@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The last line of defense | BlackCat Bio</title>
+  <meta name="description" content="A statistician is often the last line of defense between commercial pressure and the integrity of the data. On the FDA's move to withdraw a drug approval after Phase 3 data were re-adjudicated post-unblinding." />
+
+  <!-- Open Graph / LinkedIn -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="The last line of defense" />
+  <meta property="og:description" content="A statistician is often the last line of defense between commercial pressure and the integrity of the data." />
+  <meta property="og:site_name" content="BlackCat Bio" />
+  <meta property="og:url" content="https://blackcatbio.ai/statistician-integrity.html" />
+  <meta property="og:image" content="https://blackcatbio.ai/og-logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="The last line of defense | BlackCat Bio" />
+  <meta name="twitter:image" content="https://blackcatbio.ai/og-logo.png" />
+
+  <link rel="icon" type="image/png" href="blackcatlogo_no_bg.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #f4f4f4;
+      --surface: #ffffff;
+      --surface2: #eaf2f1;
+      --border: rgba(8, 21, 50, 0.1);
+      --accent: #0d9b96;
+      --accent-dim: rgba(13, 155, 150, 0.1);
+      --purple: #450c9d;
+      --purple-dim: rgba(69, 12, 157, 0.08);
+      --text: #081532;
+      --muted: #6c6c6c;
+      --ink: #33405a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    img { max-width: 100%; height: auto; }
+    html { scroll-behavior: auto; overflow-x: hidden; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 4rem;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 0.65rem; text-decoration: none; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--text); font-weight: 500; }
+    .nav-cta {
+      background: var(--accent);
+      color: #ffffff !important;
+      padding: 0.5rem 1.25rem;
+      border-radius: 3px;
+      font-weight: 600 !important;
+      letter-spacing: 0.04em !important;
+    }
+    .nav-cta.disabled, .nav-cta.disabled:hover {
+      background: #c5c8ce;
+      color: #6b7280 !important;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 110;
+    }
+    .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text); transition: 0.3s; }
+
+    /* ── ARTICLE ── */
+    .article {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 8.5rem 1.5rem 4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .article-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 24px 60px -28px rgba(8, 21, 50, 0.22);
+      padding: 3rem 3.25rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--accent);
+      font-size: 0.78rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+      margin-bottom: 2rem;
+    }
+    .back-link svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .back-link:hover { color: var(--purple); }
+
+    .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .article h1 {
+      font-family: 'Lora', serif;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.01em;
+    }
+
+    .byline {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding-bottom: 2rem;
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .byline img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+    .byline .b-name { font-size: 0.95rem; font-weight: 500; color: var(--text); }
+    .byline .b-meta { font-size: 0.8rem; color: var(--muted); }
+
+    figure { margin: 0 0 2.5rem; }
+    figure img {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      display: block;
+    }
+    figcaption {
+      margin-top: 0.75rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-style: italic;
+      text-align: center;
+    }
+
+    .article p {
+      color: var(--ink);
+      font-size: 1.08rem;
+      line-height: 1.8;
+      margin-bottom: 1.4rem;
+    }
+    .article p.lede {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      line-height: 1.55;
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+    .article strong { color: var(--text); font-weight: 600; }
+    .article a { color: var(--accent); text-decoration: none; font-weight: 500; border-bottom: 1px solid rgba(13,155,150,0.3); }
+    .article a:hover { color: var(--purple); border-color: var(--purple); }
+
+    .stat-list {
+      list-style: none;
+      margin: 0 0 1.4rem;
+      padding: 1.5rem 1.75rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--purple);
+      border-radius: 8px;
+    }
+    .stat-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 0.9rem;
+      padding: 0.55rem 0;
+      font-size: 1rem;
+      color: var(--ink);
+    }
+    .stat-list li + li { border-top: 1px solid var(--border); }
+    .stat-list .num {
+      font-family: 'Lora', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--purple);
+      min-width: 3.2rem;
+      flex-shrink: 0;
+    }
+    .stat-list .src {
+      display: block;
+      margin-top: 0.25rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .pullquote {
+      font-family: 'Lora', serif;
+      font-size: 1.5rem;
+      font-style: italic;
+      line-height: 1.4;
+      color: var(--text);
+      margin: 2.5rem 0;
+      padding-left: 1.5rem;
+      border-left: 3px solid var(--accent);
+    }
+
+    .fda-link {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin: 2.5rem 0;
+      padding: 1.5rem 1.75rem;
+      background: linear-gradient(135deg, rgba(69,12,157,0.05) 0%, rgba(13,155,150,0.08) 100%);
+      border: 1px solid rgba(69,12,157,0.14);
+      border-radius: 8px;
+    }
+    .fda-link .fl-text { flex: 1; min-width: 220px; }
+    .fda-link .fl-k { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--purple); font-weight: 600; margin-bottom: 0.3rem; }
+    .fda-link .fl-v { font-size: 0.95rem; color: var(--text); font-weight: 500; }
+    .fda-link a.fl-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: #ffffff;
+      padding: 0.7rem 1.4rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-decoration: none;
+      border: none;
+      border-bottom: none;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+    .fda-link a.fl-btn:hover { opacity: 0.85; color: #ffffff; border-color: transparent; }
+    .fl-btn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+    .end-note {
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    .footer-logo { display: flex; align-items: center; gap: 0.65rem; }
+    .footer-links { display: flex; gap: 2rem; list-style: none; flex-wrap: wrap; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.8rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy { color: var(--muted); font-size: 0.75rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-toggle { display: flex; }
+      .nav-links {
+        position: fixed;
+        top: 0; right: 0;
+        height: 100vh;
+        width: 280px;
+        flex-direction: column;
+        background: var(--surface);
+        padding: 5rem 2rem 2rem;
+        gap: 1.5rem;
+        transform: translateX(100%);
+        transition: transform 0.3s;
+        box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+        z-index: 105;
+      }
+      .nav-links.open { transform: translateX(0); }
+      .article { padding: 7rem 1rem 3rem; }
+      .article-card { padding: 1.75rem 1.5rem; border-radius: 12px; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 1.5rem; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="cat-mark.png" alt="" style="height: 42px; width: auto;">
+    <span style="display:flex; flex-direction:column; line-height:1.02;">
+      <span style="font-family:'Lora',serif; font-weight:700; font-size:1.3rem; color:#081532; letter-spacing:-0.01em;">BlackCat Bio</span>
+      <span style="font-family:'Lora',serif; font-weight:500; font-size:0.72rem; color:#6c6c6c; letter-spacing:0.02em; margin-top:3px;">Biostats from citation to submission</span>
+    </span>
+  </a>
+  <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="index.html#features">Platform</a></li>
+    <li><a href="case-studies.html">Case Studies</a></li>
+    <li><a href="blog.html" class="active">Articles</a></li>
+    <li><a href="team.html">Team</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><span class="nav-cta disabled" aria-disabled="true">Coming Soon</span></li>
+  </ul>
+</nav>
+
+<!-- ARTICLE -->
+<article class="article">
+  <a href="blog.html" class="back-link">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Articles
+  </a>
+
+  <div class="article-card">
+
+  <p class="eyebrow">Opinion · Research Integrity</p>
+  <h1>The last line of defense</h1>
+
+  <div class="byline">
+    <img src="images/barbara_headshot.jpg" alt="Barbara Elashoff">
+    <div>
+      <div class="b-name">Barbara Elashoff, MS</div>
+      <div class="b-meta">CEO &amp; Co-founder, BlackCat Bio · Former FDA statistical reviewer</div>
+    </div>
+  </div>
+
+  <figure>
+    <img src="blog_posts/barbara/image_integrity_updated.png" alt="Cartoon: a statistician standing between commercial pressure and the data.">
+    <figcaption>A statistician is the last line of defense between commercial pressure and the data.</figcaption>
+  </figure>
+
+  <p class="lede">A statistician is the last line of defense between commercial pressure and the data.</p>
+
+  <p>In April, the FDA moved to withdraw approval of a drug it had cleared in 2021, after concluding that the Phase 3 data supporting that approval had been altered. The sponsor is contesting it, and the drug remains on the market pending a hearing. I've linked the FDA's letter below; it's a surprisingly gripping read. In short, after the database was locked and treatment assignments were known, nine patients were selected for re-adjudication. Before those changes, the prespecified analysis was not statistically significant (p = 0.1025); after them, it was (p = 0.0132).</p>
+
+  <p>It's possible each of those patients was genuinely misclassified under the protocol. The independent adjudication committee may have believed it was simply correcting errors.</p>
+
+  <p>But the committee did not choose the nine patients.</p>
+
+  <p>Unblinded sponsor personnel did. And the selection ran in only one direction: the cases that could push the result toward significance were sent back for review, while the cases that could only move it the other way were left untouched. Once the choice of which patients to re-adjudicate is made after unblinding, by people who can see which way each one cuts, the adjudication is no longer independent.</p>
+
+  <p class="pullquote">That is the line that cannot be crossed.</p>
+
+  <p>The CMO may have convinced himself this was legitimate quality control. The statistician may have felt enormous pressure to find the patients who could turn the result around. We do not know what was said behind closed doors.</p>
+
+  <p>But statisticians are often the last line of defense between intense commercial pressure and the integrity of the data.</p>
+
+  <p>This is not a new problem. In a 2018 survey of U.S. consulting biostatisticians (Wang, Yan &amp; Katz, <em>Annals of Internal Medicine</em>):</p>
+
+  <ul class="stat-list">
+    <li><span class="num">24%</span><span>had been asked to remove or alter observations to support a hypothesis.</span></li>
+    <li><span class="num">7%</span><span>had been asked to change data to achieve a desired outcome.</span></li>
+    <li><span class="num">3%</span><span>had been explicitly asked to falsify statistical significance.</span></li>
+  </ul>
+
+  <p>I have faced this pressure myself, particularly in Phase 2 trials where the data is going not to FDA but to investors. I have been called "rigid" for refusing to change data or analyses after the results were known. Over time I found a way to make the point without a lecture on the central limit theorem or a sermon on research integrity.</p>
+
+  <p>Now I use simulations and graphs to show how random variation works, how easily a p-value can move, and how quickly the false-positive rate climbs once we start changing the rules after seeing the answer.</p>
+
+  <p>A statistician's job is not to find the analysis that produces p &lt; 0.05. Our job is to protect the integrity of the analysis when everyone else desperately wants p &lt; 0.05.</p>
+
+  <div class="fda-link">
+    <div class="fl-text">
+      <div class="fl-k">Further reading</div>
+      <div class="fl-v">The FDA's letter on the withdrawal</div>
+    </div>
+    <a class="fl-btn" href="https://www.fda.gov/media/192160/download?attachment" target="_blank" rel="noopener">
+      Read the FDA letter
+      <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+    </a>
+  </div>
+
+  </div>
+</article>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="cat-mark.png" alt="" style="height: 34px; width: auto;">
+    <span style="display:flex; flex-direction:column; line-height:1.02;">
+      <span style="font-family:'Lora',serif; font-weight:700; font-size:1.05rem; color:#081532; letter-spacing:-0.01em;">BlackCat Bio</span>
+      <span style="font-family:'Lora',serif; font-weight:500; font-size:0.62rem; color:#6c6c6c; letter-spacing:0.02em; margin-top:2px;">Biostats from citation to submission</span>
+    </span>
+  </div>
+  <ul class="footer-links">
+    <li><a href="index.html#features">Platform</a></li>
+    <li><a href="case-studies.html">Case Studies</a></li>
+    <li><a href="blog.html">Articles</a></li>
+    <li><a href="team.html">Team</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 BlackCat Bio, Inc.</div>
+</footer>
+
+<script>
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('active');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      navToggle.classList.remove('active');
+    });
+  });
+</script>
+
+</body>
+</html>
