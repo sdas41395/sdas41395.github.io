@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service | BlackCat Bio</title>
+  <link rel="icon" type="image/png" href="blackcatlogo_no_bg.png">
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="BlackCat Bio" />
+  <meta property="og:title" content="Terms of Service | BlackCat Bio" />
+  <meta property="og:url" content="https://blackcatbio.ai/terms.html" />
+  <meta property="og:image" content="https://blackcatbio.ai/og-logo.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="1200" />
+  <meta property="og:image:alt" content="BlackCat Bio logo" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Terms of Service | BlackCat Bio" />
+  <meta name="twitter:image" content="https://blackcatbio.ai/og-logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f4f4f4;
+      --surface: #ffffff;
+      --surface2: #eaf2f1;
+      --border: rgba(8, 21, 50, 0.1);
+      --accent: #0d9b96;
+      --accent-dim: rgba(13, 155, 150, 0.1);
+      --purple: #450c9d;
+      --purple-dim: rgba(69, 12, 157, 0.08);
+      --text: #081532;
+      --muted: #6c6c6c;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    img { max-width: 100%; height: auto; }
+    html { scroll-behavior: auto; overflow-x: hidden; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025; pointer-events: none; z-index: 0;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 4rem;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 0.65rem; text-decoration: none; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.8rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta { background: var(--accent); color: #ffffff !important; padding: 0.5rem 1.25rem; border-radius: 3px; font-weight: 600 !important; letter-spacing: 0.04em !important; transition: opacity 0.2s !important; }
+    .nav-cta:hover { opacity: 0.85; }
+    .nav-cta.disabled,
+    .nav-cta.disabled:hover {
+      background: #c5c8ce;
+      color: #6b7280 !important;
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 1;
+    }
+
+    /* PAGE HEADER */
+    .page-header {
+      position: relative;
+      padding: 8rem 4rem 4.5rem;
+      background: linear-gradient(135deg, rgba(13,155,150,0.06) 0%, rgba(69,12,157,0.05) 100%);
+      border-bottom: 1px solid rgba(13,155,150,0.12);
+      overflow: hidden;
+    }
+    .page-header-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(13,155,150,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(13,155,150,0.07) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+    }
+    .page-header-inner { position: relative; z-index: 2; max-width: 720px; margin: 0 auto; }
+    .page-eyebrow { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+    .page-title { font-family: 'Lora', serif; font-size: clamp(2rem, 4.5vw, 3.25rem); font-weight: 400; line-height: 1.15; letter-spacing: -0.025em; color: var(--text); margin-bottom: 0.85rem; }
+    .page-subtitle { font-size: 1rem; color: var(--muted); max-width: 50ch; line-height: 1.7; }
+
+    /* TERMS CONTENT */
+    .terms-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 4rem 4rem 6rem;
+      position: relative;
+      z-index: 1;
+    }
+    .terms-body {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.8;
+    }
+    .terms-body h2 {
+      font-family: 'Lora', serif;
+      font-size: 1.35rem;
+      font-weight: 500;
+      letter-spacing: -0.015em;
+      color: var(--text);
+      margin: 2.5rem 0 0.85rem;
+    }
+    .terms-body h2:first-child { margin-top: 0; }
+    .terms-body h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 1.75rem 0 0.6rem;
+    }
+    .terms-body p { margin-bottom: 1rem; color: var(--muted); }
+    .terms-body ul, .terms-body ol {
+      margin: 0 0 1rem 1.25rem;
+      color: var(--muted);
+    }
+    .terms-body li { margin-bottom: 0.4rem; }
+    .terms-body a { color: var(--accent); text-decoration: none; }
+    .terms-body a:hover { text-decoration: underline; }
+    .terms-placeholder {
+      padding: 2.5rem 2rem;
+      background: var(--surface);
+      border: 1px dashed rgba(13,155,150,0.35);
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+    .terms-placeholder strong {
+      display: block;
+      font-family: 'Lora', serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.65rem;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid rgba(13,155,150,0.15);
+      padding: 2.5rem 4rem;
+      display: flex; align-items: center; justify-content: space-between;
+      position: relative; z-index: 1;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+    }
+    .footer-logo { display: flex; align-items: center; gap: 0.5rem; }
+    .footer-links { display: flex; gap: 1.75rem; list-style: none; flex-wrap: wrap; }
+    .footer-links a { font-size: 0.78rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy { font-size: 0.75rem; color: var(--muted); }
+
+    /* MOBILE HAMBURGER */
+    .nav-toggle {
+      display: none;
+      background: none; border: none; cursor: pointer; padding: 0.5rem; z-index: 110;
+    }
+    .nav-toggle span {
+      display: block; width: 22px; height: 2px; background: var(--text); margin: 5px 0;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .nav-toggle.active span:nth-child(2) { opacity: 0; }
+    .nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    @media (max-width: 1024px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-toggle { display: block; }
+      .nav-links {
+        position: fixed; top: 0; right: 0; width: 75vw; max-width: 320px; height: 100vh;
+        background: var(--surface); flex-direction: column; padding: 5rem 2rem 2rem; gap: 1.5rem;
+        border-left: 1px solid var(--border); box-shadow: -4px 0 24px rgba(8,21,50,0.1);
+        transform: translateX(100%); transition: transform 0.3s ease; z-index: 105;
+      }
+      .nav-links.open { transform: translateX(0); }
+      .nav-links a { font-size: 0.9rem; }
+      .nav-cta { text-align: center; }
+      .page-header { padding: 7rem 1.5rem 3rem; }
+      .terms-wrap { padding: 3rem 1.5rem 4rem; }
+      footer {
+        flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 1.5rem;
+      }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="cat-mark.png" alt="" style="height: 42px; width: auto;">
+    <span style="display:flex; flex-direction:column; line-height:1.02;">
+      <span style="font-family:'Lora',serif; font-weight:700; font-size:1.3rem; color:#081532; letter-spacing:-0.01em;">BlackCat Bio</span>
+      <span style="font-family:'Lora',serif; font-weight:500; font-size:0.72rem; color:#6c6c6c; letter-spacing:0.02em; margin-top:3px;">Biostats from citation to submission</span>
+    </span>
+  </a>
+  <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="index.html#features">Platform</a></li>
+    <li><a href="case-studies.html">Case Studies</a></li>
+    <li><a href="blog.html">Articles</a></li>
+    <li><a href="team.html">Team</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><span class="nav-cta disabled" aria-disabled="true">Coming Soon</span></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-grid"></div>
+  <div class="page-header-inner">
+    <p class="page-eyebrow">Legal</p>
+    <h1 class="page-title">Terms of Service</h1>
+    <p class="page-subtitle">The terms that govern use of the BlackCat Bio platform.</p>
+  </div>
+</div>
+
+<div class="terms-wrap">
+  <div class="terms-body">
+    <!-- Replace the placeholder below with the final Terms of Service content. -->
+    <div class="terms-placeholder">
+      <strong>Terms of Service — coming soon</strong>
+      Paste the final platform Terms of Service here. Headings use <code>h2</code> / <code>h3</code>; body copy uses <code>p</code>, <code>ul</code>, and <code>ol</code>.
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">
+    <img src="cat-mark.png" alt="" style="height: 34px; width: auto;">
+    <span style="display:flex; flex-direction:column; line-height:1.02;">
+      <span style="font-family:'Lora',serif; font-weight:700; font-size:1.05rem; color:#081532; letter-spacing:-0.01em;">BlackCat Bio</span>
+      <span style="font-family:'Lora',serif; font-weight:500; font-size:0.62rem; color:#6c6c6c; letter-spacing:0.02em; margin-top:2px;">Biostats from citation to submission</span>
+    </span>
+  </div>
+  <ul class="footer-links">
+    <li><a href="index.html#features">Platform</a></li>
+    <li><a href="case-studies.html">Case Studies</a></li>
+    <li><a href="blog.html">Articles</a></li>
+    <li><a href="team.html">Team</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="terms.html">Terms of Service</a></li>
+    <li><a href="privacy.html">Privacy Policy</a></li>
+    <li><a href="https://www.linkedin.com/company/blackcat-bio" target="_blank" rel="noopener">LinkedIn</a></li>
+  </ul>
+  <div class="footer-copy">&copy; 2026 BlackCat Bio, Inc.</div>
+</footer>
+
+<script>
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('active');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navToggle.classList.remove('active');
+      navLinks.classList.remove('open');
+    });
+  });
+</script>
+
+</body>
+</html>
