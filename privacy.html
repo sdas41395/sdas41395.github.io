@@ -97,7 +97,7 @@
 
     /* TERMS CONTENT */
     .terms-wrap {
-      max-width: 720px;
+      max-width: 960px;
       margin: 0 auto;
       padding: 4rem 4rem 6rem;
       position: relative;
@@ -108,47 +108,58 @@
       color: var(--text);
       line-height: 1.8;
     }
-    .terms-body h2 {
-      font-family: 'Lora', serif;
-      font-size: 1.35rem;
+    .pdf-viewer {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .pdf-viewer-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 1.15rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface2);
+      flex-wrap: wrap;
+    }
+    .pdf-viewer-label {
+      font-size: 0.8rem;
       font-weight: 500;
-      letter-spacing: -0.015em;
-      color: var(--text);
-      margin: 2.5rem 0 0.85rem;
-    }
-    .terms-body h2:first-child { margin-top: 0; }
-    .terms-body h3 {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text);
-      margin: 1.75rem 0 0.6rem;
-    }
-    .terms-body p { margin-bottom: 1rem; color: var(--muted); }
-    .terms-body ul, .terms-body ol {
-      margin: 0 0 1rem 1.25rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
       color: var(--muted);
     }
-    .terms-body li { margin-bottom: 0.4rem; }
-    .terms-body a { color: var(--accent); text-decoration: none; }
-    .terms-body a:hover { text-decoration: underline; }
-    .terms-placeholder {
-      padding: 2.5rem 2rem;
-      background: var(--surface);
-      border: 1px dashed rgba(13,155,150,0.35);
-      border-radius: 6px;
+    .pdf-viewer-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .pdf-viewer-actions a {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .pdf-viewer-actions a:hover { opacity: 0.75; text-decoration: underline; }
+    .pdf-viewer iframe {
+      display: block;
+      width: 100%;
+      height: min(80vh, 900px);
+      border: 0;
+      background: #e8e8e8;
+    }
+    .pdf-viewer-fallback {
+      display: none;
+      padding: 2rem 1.5rem;
       color: var(--muted);
       font-size: 0.92rem;
       line-height: 1.7;
+      text-align: center;
     }
-    .terms-placeholder strong {
-      display: block;
-      font-family: 'Lora', serif;
-      font-size: 1.1rem;
-      font-weight: 500;
-      color: var(--text);
-      margin-bottom: 0.65rem;
-    }
+    .pdf-viewer-fallback a { color: var(--accent); }
 
     /* FOOTER */
     footer {
@@ -231,10 +242,23 @@
 
 <div class="terms-wrap">
   <div class="terms-body">
-    <!-- Replace the placeholder below with the final Privacy Policy content. -->
-    <div class="terms-placeholder">
-      <strong>Privacy Policy — coming soon</strong>
-      Paste the final Privacy Policy here. Headings use <code>h2</code> / <code>h3</code>; body copy uses <code>p</code>, <code>ul</code>, and <code>ol</code>.
+    <div class="pdf-viewer">
+      <div class="pdf-viewer-toolbar">
+        <span class="pdf-viewer-label">Privacy Policy — August 2026</span>
+        <div class="pdf-viewer-actions">
+          <a href="blackcat-bio-privacy-policy.pdf" target="_blank" rel="noopener">Open in new tab</a>
+          <a href="blackcat-bio-privacy-policy.pdf" download>Download PDF</a>
+        </div>
+      </div>
+      <iframe
+        src="blackcat-bio-privacy-policy.pdf#view=FitH"
+        title="BlackCat Bio Privacy Policy"
+        loading="lazy"
+      ></iframe>
+      <p class="pdf-viewer-fallback">
+        Unable to display the PDF in this browser.
+        <a href="blackcat-bio-privacy-policy.pdf" target="_blank" rel="noopener">Open or download the Privacy Policy</a>.
+      </p>
     </div>
   </div>
 </div>
